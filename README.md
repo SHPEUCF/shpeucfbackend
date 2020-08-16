@@ -3,6 +3,7 @@ SHPE UCF backend for app and website
 How to install Firebase command Line Inference 
 
 Install the CLI by running the following npm commands:
+
 npm install --save firebase
 npm -g install firebase-tools
 
