@@ -5,6 +5,7 @@ How to install Firebase command Line Inference
 Install the CLI by running the following npm commands:
 
 npm install --save firebase
+
 npm -g install firebase-tools
 
 Next Authorize the Firebase CLI by running the following command:
