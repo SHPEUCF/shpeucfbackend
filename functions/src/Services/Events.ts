@@ -6,12 +6,11 @@ import { Events } from "../Models/Events";
 
 export const createEvent = (event: Events) => {
 	App.database().ref("/events/").push({ ...event, eventActive: false, code: event.makeCode() })
-	.then(snapshot => {
-		App.database().ref(`/events/${snapshot.key}/id`).set(snapshot.key);
-		// if (event.committee)
-		// 	App.database().ref(`/committees/${event.committee}/events/`).update({ [snapshot.key]: true });
-	})
-
+		.then(snapshot => {
+			App.database().ref(`/events/${snapshot.key}/id`).set(snapshot.key);
+			// if (event.committee)
+			// 	App.database().ref(`/committees/${event.committee}/events/`).update({ [snapshot.key]: true });
+		})
 };
 
 export const editEvent = (event: Events) => {
@@ -29,7 +28,7 @@ export const rsvp = (event: Events, user: User) => {
 };
 
 export const checkIn = (event: Events, user: User, showAlert = true) => {
-	
+
 	const rsvpBonus = event.rsvp && user.id in event.rsvp ? 1 : 0;
 
 	const pointsAfterCheckIn = user.points + event.points + rsvpBonus;
@@ -56,9 +55,3 @@ export const deleteEvent = (event: Events) => {
 			App.database().ref(`committees/${event.committee}/events/`).update({ [event.id]: null });
 		})
 }
-
-// exports.checkIn = checkIn;
-// exports.deleteEvent = deleteEvent;
-// exports.editEvent = editEvent;
-// exports.createEvent = createEvent;
-// exports.rsvp = rsvp;
