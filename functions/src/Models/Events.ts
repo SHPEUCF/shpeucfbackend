@@ -7,7 +7,7 @@ export class Events {
     location:  string;
     points: string;
     committee: string;
-    type: any;
+    type: string;
     id: string;
     code: string;
     constructor({ name, date, startTime, endTime, location, points, committee, type, id }: any) {
