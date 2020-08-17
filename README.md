@@ -20,7 +20,7 @@ Once signed in your command line should give you this message
 After you are signed in use the following command to associate your app with your firebase project:
 firebase use --add
 
-To start your firestore emulator use the following command:
+Next cd into your functions folder then run the following command to start your firebase emulator:
 firebase emulators:start
 ![emulator](https://github.com/SHPEUCF/shpeucfbackend/blob/master/assets/emulatorFirebase.png)
 
