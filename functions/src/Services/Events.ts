@@ -3,7 +3,6 @@ import * as App from 'firebase-admin';
 import { User } from "../Models/User";
 import { Events } from "../Models/Events";
 
-
 export const createEvent = (event: Events) => {
 	App.database().ref("/events/").push({ ...event, eventActive: false, code: event.makeCode() })
 		.then(snapshot => {
