@@ -1,20 +1,21 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
 // import * as opt from '@google-cloud/firestore';
 // const firebase = require('firebase');
-// import * as firebase from 'firebase';
+import firebase from 'firebase-admin';
 import 'firebase/firestore';
 
-//   admin.initializeApp({
-//   apiKey: 'AIzaSyCeX5lUZUmQxXsWNO8gNXVHqfJs-kQmSaY',
-//   authDomain: '### FIREBASE AUTH DOMAIN ###',
-//   projectId: 'shpe-ucf'
-// });
+const config = {
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  databaseURL: process.env.databaseURL,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId
+};
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault()
-})
-export const db = admin.firestore();
+const app = firebase.initializeApp(config);
+export const db = firebase.firestore(app);
 
 
 
