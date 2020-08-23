@@ -36,6 +36,7 @@ export class Event {
     }
 }
 
+// Converts Event objects into Firestore data and vice versa.
 export const eventConverter = {
     toFirestore: function(event: Event): firebase.firestore.DocumentData {
         const { rsvp, name, date, startTime, endTime, location, points, committee, type, id, code } = event;

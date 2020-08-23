@@ -1,8 +1,8 @@
-import * as functions from 'firebase-functions';
-// import * as opt from '@google-cloud/firestore';
-// const firebase = require('firebase');
+import functions from 'firebase-functions';
 import firebase from 'firebase-admin';
 import 'firebase/firestore';
+import * as userService from './Controller/User';
+import * as eventService from './Controller/Event';
 
 const config = {
   apiKey: process.env.apiKey,
@@ -17,14 +17,8 @@ const config = {
 const app = firebase.initializeApp(config);
 export const db = firebase.firestore(app);
 
-
-
-import * as userService from './Controller/User';
-import * as eventService from './Controller/Events';
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
+// Start writing Firebase Functions
+// https://firebase.google.com/docs/functions/typescript
 
 export const makeUppercase = functions.firestore.document('/messages/{documentId}')
   .onCreate((snap, context) => {
@@ -45,9 +39,6 @@ export const helloWorld = functions.https.onRequest(async (request, response) =>
   response.send("Hello from Firebase!");
   
 });
-
-
-  
 
 export const createUser = userService.create_User;
 export const createEvent = eventService.create_Event;
