@@ -1,29 +1,24 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-// import * as opt from '@google-cloud/firestore';
-// const firebase = require('firebase');
-// import * as firebase from 'firebase';
+import functions from 'firebase-functions';
+import firebase from 'firebase-admin';
 import 'firebase/firestore';
-
-//   admin.initializeApp({
-//   apiKey: 'AIzaSyCeX5lUZUmQxXsWNO8gNXVHqfJs-kQmSaY',
-//   authDomain: '### FIREBASE AUTH DOMAIN ###',
-//   projectId: 'shpe-ucf'
-// });
-
-admin.initializeApp({
-  credential: admin.credential.applicationDefault()
-})
-export const db = admin.firestore();
-
-
-
 import * as userService from './Controller/User';
-import * as eventService from './Controller/Events';
+import * as eventService from './Controller/Event';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
+const config = {
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  databaseURL: process.env.databaseURL,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId
+};
+
+const app = firebase.initializeApp(config);
+export const db = firebase.firestore(app);
+
+// Start writing Firebase Functions
+// https://firebase.google.com/docs/functions/typescript
 
 export const makeUppercase = functions.firestore.document('/messages/{documentId}')
   .onCreate((snap, context) => {
@@ -44,9 +39,6 @@ export const helloWorld = functions.https.onRequest(async (request, response) =>
   response.send("Hello from Firebase!");
   
 });
-
-
-  
 
 export const createUser = userService.create_User;
 export const createEvent = eventService.create_Event;
