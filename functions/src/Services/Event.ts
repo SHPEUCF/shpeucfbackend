@@ -2,14 +2,9 @@ import { User } from "../Models/User";
 import { Event, eventConverter } from "../Models/Event";
 import { firestore } from 'firebase-admin';
 
-// Creates an event document and adds it to the events collection.
-export const createEvent = (event: any) => {
-    // Retrieve the events collection with a converter to be able to convert generic types of data to Firestore data.
-    // Here, we convert event objects to Firestore data.
+export const createEvent = (event: Event) => {
     const eventCollection = firestore().collection('events').withConverter(eventConverter);
-
-    // Add new event document to events collection.
-	eventCollection.add(new Event(event));
+	eventCollection.add(event);
 };
 
 export const editEvent = (event: Event) => {
