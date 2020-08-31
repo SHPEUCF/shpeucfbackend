@@ -1,7 +1,7 @@
 # shpeucfbackend
 SHPE UCF backend for app and website
-Firebase Admin doc:
-https://firebase.google.com/docs/reference/admin/node/admin.firestore
+
+Firestore Admin doc: [Admin Firestore](https://firebase.google.com/docs/reference/admin/node/admin.firestore)
 
 How to install Firebase command Line Inference 
 
