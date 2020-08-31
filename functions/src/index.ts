@@ -14,7 +14,7 @@ const config = {
 
 const app = firebase.initializeApp(config);
 
- const db = firebase.firestore(app);
+const db = firebase.firestore(app);
 db.settings({
   ssl: false,
   timestampsInSnapshots: true
