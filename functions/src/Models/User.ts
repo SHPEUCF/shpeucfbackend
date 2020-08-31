@@ -1,3 +1,5 @@
+import firebase from 'firebase-admin';
+
 export class User {
     voted: boolean = false;
     applied: boolean = false;
@@ -7,25 +9,31 @@ export class User {
     points: number = 0;
     flag: string = "";
     picture: string = "";
-    firstName: string;
-    lastName: string;
-    email: string;
-    major: string;
-    country: string;
-    gender: string;
-    birthday: string;
-    id: string;
+    firstName: string = "";
+    lastName: string = "";
+    email: string = "";
+    major: string = "";
+    country: string = "";
+    gender: string = "";
+    birthday: string = "";
+    id: string = "";
 
-    constructor({ firstName, lastName, email, major, country, gender, birthday, id}: any) {
-        this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.major = major;
-		this.country = country;
-		this.gender = gender;
-		this.birthday = birthday;
-		this.id = id;
+    constructor(user: Partial<User> = {}) {
+        Object.assign(this, user);
     }
 
 }
 
+export const userConverter = {
+    toFirestore: function(user: User): firebase.firestore.DocumentData {
+        const { voted, applied, userCommittees, privilege, color, country, picture, points, flag,
+            firstName, lastName, email, major, gender, birthday, id} = user;
+
+        return { voted, applied, userCommittees, privilege, color, country, picture, points, flag,
+            firstName, lastName, email, major, gender, birthday, id };
+    },
+    fromFirestore: function(snapshot: firebase.firestore.DocumentData): User {
+        const data = snapshot;
+        return new User(data);
+    }
+}
