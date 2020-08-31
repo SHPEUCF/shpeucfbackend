@@ -1,6 +1,4 @@
-import functions from 'firebase-functions';
 import firebase from 'firebase-admin';
-import 'firebase/firestore';
 import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
 
@@ -15,30 +13,16 @@ const config = {
 };
 
 const app = firebase.initializeApp(config);
-export const db = firebase.firestore(app);
 
+const db = firebase.firestore(app);
+db.settings({
+  ssl: false,
+  timestampsInSnapshots: true
+});
+
+export { db };
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
-
-export const makeUppercase = functions.firestore.document('/messages/{documentId}')
-  .onCreate((snap, context) => {
-    const original = snap.data().original;
-    console.log('Uppercasing', context.params.documentId, original);
-    const uppercase = original.toUpperCase();
-    return snap.ref.set({uppercase}, {merge: true});
-  });
-
-export const helloWorld = functions.https.onRequest(async (request, response) => {
-  const docRef = db.collection('users').doc('alovelace');
-  docRef.set({
-    first: 'Ada',
-    last: 'Lovelace',
-    born: 1815
-  });
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-  
-});
 
 export const createUser = userService.create_User;
 export const createEvent = eventService.create_Event;
