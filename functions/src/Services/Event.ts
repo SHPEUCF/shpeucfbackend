@@ -2,19 +2,24 @@ import { User } from "../Models/User";
 import { Event, eventConverter } from "../Models/Event";
 import { firestore } from 'firebase-admin';
 
+/**
+ * Handles retrieving the event collection with the converter.
+ */
+function getEventCollection() {
+	return firestore().collection('events').withConverter(eventConverter);
+}
+
 export const createEvent = (event: Event) => {
-    const eventCollection = firestore().collection('events').withConverter(eventConverter);
+	const eventCollection = getEventCollection();
 	eventCollection.add(event);
 };
 
+/**
+ * The eventConverter only works with set and get, so the `event` is unpacked and passed in as a generic object.
+ */
 export const editEvent = (event: Event) => {
-	// App.database().ref(`events/${event.id}`).once("value", snapshot => {
-	// 	if (snapshot.val())
-	// 		App.database().ref(`committees/${snapshot.val().committee}/events/`).update({ [event.id]: null });
-	// })
-	// App.database().ref(`/events/${event.id}`).update(event);
-	// if (event.committee)
-	// 	App.database().ref(`/committees/${event.committee}/events/`).update({ [event.id]: true });
+	const eventCollection = getEventCollection();
+	eventCollection.doc(event.id).update({ ...event });
 }
 
 export const rsvp = (event: Event, user: User) => {
