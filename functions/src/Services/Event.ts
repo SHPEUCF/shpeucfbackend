@@ -3,7 +3,7 @@ import { Event, eventConverter } from "../Models/Event";
 import { firestore } from 'firebase-admin';
 
 /**
- * This function is used to easily handle retrieving the event collection with the converter
+ * Handles retrieving the event collection with the converter.
  */
 function getEventCollection() {
 	return firestore().collection('events').withConverter(eventConverter);
@@ -15,9 +15,7 @@ export const createEvent = (event: Event) => {
 };
 
 /**
- * This function currently does not work with the eventConverter, hence the need for the spread operator ({ ...event })
- * 
- * getEventCollection() was used for consistency with the rest of the event functions
+ * The eventConverter only works with set and get, so the `event` is unpacked and passed in as a generic object.
  */
 export const editEvent = (event: Event) => {
 	const eventCollection = getEventCollection();
