@@ -25,22 +25,22 @@ Open-source back end development for the SHPE UCF app and website.
 	Your command line should give you a URL to sign in to your firebase console. Copy and paste the URL into your browser and sign in with the browser. *Ask the tech directors for the login information*.
 
 	<p align="center">
-		<img height="175" src="assets/signIn.png" />
+		<img height="125" src="assets/signIn.png" />
 	</p>
 
 	Once you sign in successfully, you will get to a "Firebase CLI Login Successful" page. Woot woot! :tada:
 1. Next, cd into the `functions` folder and run the following command to start your firebase emulator:
 	```
 	npm run serve
+	// shortcut for `npm run build && firebase emulators:start`
 	```
+	This will, in turn, run:
+	* `npm run build`: compiles the functions in the code to work with the emulator. It must be run after any changes to the code if you want those changes to be reflected on the emulator
+	* `firebase emulators:start`: starts the local emulator for firebase used to test the firestore
 	After, you can view the status on your localhost.
 	<p align="center">
 		<img height="265" src="assets/emulatorFirebase.png" />
 	</p>
-1. To deploy a new cloud function, run the following:
-	```
-	npm run build
-	```
 
 ## Contributing
 For contributing to this project, please check out [contributing](.github/CONTRIBUTING.md), where you will find how to work with Git, handle branches, and pull requests.
