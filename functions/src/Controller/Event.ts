@@ -30,8 +30,8 @@ export const delete_Event = functions.https.onRequest((request, response) => {
 });
 
 export const rsvps = functions.https.onRequest((request, response) => {
-	const event: Event = new Event(request.body);
-	const user: User = new User(request.body);
+	const event: Event = new Event(request.body[0]);
+	const user: User = new User(request.body[1]);
 	rsvp(event, user);
 	response.status(200).send('Good Job');
 });

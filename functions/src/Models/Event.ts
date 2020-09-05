@@ -1,7 +1,7 @@
 import firebase from 'firebase-admin';
 
 export class Event {
-    rsvp = {};
+    rsvp: string[] = [];
     name: string = ""; 
     date: string = "";
     startTime: string = "";
