@@ -1,30 +1,57 @@
-# shpeucfbackend
-SHPE UCF backend for app and website
+# SHPE @ UCF Back end Development
 
-Firestore Admin doc: [Admin Firestore](https://firebase.google.com/docs/reference/admin/node/admin.firestore)
+Open-source back end development for the SHPE UCF app and website.
 
-How to install Firebase command Line Inference 
+## Contents
+* [Environment setup](#environment-setup)
+* [Contributing](#contributing)
+* [About](#about)
+* [Useful links](#useful-links)
 
-Install the CLI by running the following npm commands:
+## Environment setup
+1. Clone the repository and navigate to the project.
+	```
+	git clone https://github.com/SHPEUCF/shpeucfbackend.git
+	cd shpeucfbackend
+	```
+1. Install the Firebase CLI (command line interface).
+	```
+	npm -g install firebase-tools
+	```
+1. Authorize the Firebase CLI.
+	```
+	firebase login
+	```
+	Your command line should give you a URL to sign in to your firebase console. Copy and paste the URL into your browser and sign in with the browser. *Ask the tech directors for the login information*.
 
-npm install --save firebase
+	<p align="center">
+		<img height="125" src="assets/signIn.png" />
+	</p>
 
-npm -g install firebase-tools
+	Once you sign in successfully, you will get to a "Firebase CLI Login Successful" page. Woot woot! :tada:
+1. Next, cd into the `functions` folder and run the following command to start your firebase emulator:
+	```
+	npm run serve
+	// shortcut for `npm run build && firebase emulators:start`
+	```
+	This will, in turn, run:
+	* `npm run build`: compiles the functions in the code to work with the emulator. It must be run after any changes to the code if you want those changes to be reflected on the emulator
+	* `firebase emulators:start`: starts the local emulator for firebase used to test the firestore
+	After, you can view the status on your localhost.
+	<p align="center">
+		<img height="265" src="assets/emulatorFirebase.png" />
+	</p>
 
-Next Authorize the Firebase CLI by running the following command:
-firebase login
-![loginPic](https://github.com/SHPEUCF/shpeucfbackend/blob/master/assets/signIn.png)
+## Contributing
+For contributing to this project, please check out [contributing](.github/CONTRIBUTING.md), where you will find how to work with Git, handle branches, and pull requests.
 
-Your command line should give you a url so you can sign in to your firebase console so just copy and paste the url into your browser and sign in with the browser.
-Once signed in your command line should give you this message
-✔  Success! Logged in as shpeucfapps@gmail.com
-![finishedLogin](https://github.com/SHPEUCF/shpeucfbackend/blob/master/assets/onlineFirebase.png)
+## About
+**Built with**
+* [Firestore](https://firebase.google.com/docs/firestore/)
+* [Node](https://nodejs.org/en/)
 
-Next cd into your functions folder then run the following command to start your firebase emulator:
+**License**  
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-npm run serve
-![emulator](https://github.com/SHPEUCF/shpeucfbackend/blob/master/assets/emulatorFirebase.png)
-
-And use the following command to deploy new cloud function: 
-npm run build
-
+## Useful links
+* [Firestore Admin documentation](https://firebase.google.com/docs/reference/admin/node/admin.firestore)
