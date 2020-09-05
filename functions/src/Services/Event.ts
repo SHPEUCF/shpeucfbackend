@@ -19,7 +19,9 @@ export const createEvent = (event: Event) => {
  */
 export const editEvent = (event: Event) => {
 	const eventCollection = getEventCollection();
-	eventCollection.doc(event.id).update({ ...event });
+	eventCollection.doc(event.id).update({ ...event })
+	.then(() => Promise.resolve())
+	.catch(error => Promise.reject(error));
 }
 
 export const rsvp = (event: Event, user: User) => {
@@ -55,9 +57,8 @@ export const checkIn = (event: Event, user: User, showAlert = true) => {
 };
 
 export const deleteEvent = (event: Event) => {
-	// console.log(JSON.stringify(event));
-	// App.database().ref(`events/${event.id}`).set(null)
-	// 	.then(() => {
-	// 		App.database().ref(`committees/${event.committee}/events/`).update({ [event.id]: null });
-	// 	})
+	const eventRef = getEventCollection();
+	eventRef.doc(event.id).delete()
+	.then(() => Promise.resolve())
+	.catch(error => Promise.reject(error));
 };
