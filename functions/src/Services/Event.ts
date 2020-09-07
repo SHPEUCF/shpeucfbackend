@@ -35,15 +35,14 @@ export const editEvent = (event: Event) => {
 		.catch(error => Promise.reject(error));
 };
 
+/**
+ * Adds User's doc id to the Event's rsvp list, then updates the Event document
+ * to contain the new list.
+ */
 export const rsvp = (event: Event, user: User) => {
-	// const doc = db.collection('events').doc(event.id);
-	// if (!doc.create(rsvp))
-	// {
-
-	// }
-	// const res = doc.update({rsvp: user.id});
-
-	// App.database().ref(`events/${event.id}/rsvp`).update({ [user.id]: !(user.id in event.rsvp) });
+	const eventCollection = getEventCollection();
+	event.rsvp.push(user.id);
+	eventCollection.doc(event.id).update({rsvp: event.rsvp});
 };
 
 /**

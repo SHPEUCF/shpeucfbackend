@@ -14,6 +14,11 @@ Open-source back end development for the SHPE UCF app and website.
 	git clone https://github.com/SHPEUCF/shpeucfbackend.git
 	cd shpeucfbackend
 	```
+1. Navigate to the functions folder and install the modules used.
+	```
+	cd functions
+	npm install
+	```
 1. Install the Firebase CLI (command line interface).
 	```
 	npm -g install firebase-tools
