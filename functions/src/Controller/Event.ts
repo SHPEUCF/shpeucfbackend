@@ -17,8 +17,8 @@ export const edit_Event = functions.https.onRequest((request, response) => {
 });
 
 export const check_In = functions.https.onRequest((request, response) => {
-		const event: Event = new Event(request.body.event);
-		const user: User = new User(request.body.user);
+		const event: Event = new Event(request.body[0]);
+		const user: User = new User(request.body[1]);
 		checkIn(event, user);
 		response.status(200).send('Good Job');
 });
