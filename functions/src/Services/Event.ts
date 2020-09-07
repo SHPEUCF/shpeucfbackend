@@ -48,16 +48,10 @@ export const rsvp = (event: Event, user: User) => {
 
 /**
  * userReference and eventReference do not use their respective converters, because they're stored as documentReferences in the firestore
- *
- * The attendees subCollection inside of an event stores documentReferences to users that attended that event,
- * that way if any of the user data updates, we don't have to update the subCollection inside of an event
- *
- * The eventsAttended subCollection works the same way as the attendees subCollection, except this one stores references to events attended by the user
  */
 export const checkIn = (event: Event, user: User, showAlert = true) => {
-	const rsvpBonus = event.rsvp && user.id in event.rsvp ? 1 : 0;
+	const rsvpBonus = (event.rsvp && user.id in event.rsvp) ? 1 : 0;
 	const pointsAfterCheckIn = user.points + event.points + rsvpBonus;
-
 	const userReference = firestore().collection('users').doc(user.id);
 	const eventReference = firestore().collection('users').doc(event.id);
 
@@ -66,8 +60,6 @@ export const checkIn = (event: Event, user: User, showAlert = true) => {
 			getUserCollection().doc(user.id).update({ points: pointsAfterCheckIn })
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
-		})
-		.then(() => {
 			getUserCollection().doc(user.id).collection('eventsAttended').doc(event.id).set({ eventRef: eventReference })
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
