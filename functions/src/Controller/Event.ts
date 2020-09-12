@@ -47,13 +47,10 @@ export const editEventController = functions.https.onRequest(async (request, res
 export const checkInController = functions.https.onRequest(async (request, response) => {
 	const event: Event = new Event(request.body[0]);
 	const user: User = new User(request.body[1]);
-
 	const eventCollection = getEventCollection();
 	const userCollection = getUserCollection();
-
 	const eventDoc = eventCollection.doc(event.id);
 	const userDoc = userCollection.doc(user.id);
-
 	let validEvent = false;
 	let validUser = false;
 
@@ -80,7 +77,7 @@ export const checkInController = functions.https.onRequest(async (request, respo
 		checkIn(event, user);
 		response.status(200).send('Good Job');
 	}
-	else if (!validEvent && ! validUser) {
+	else if (!validEvent && !validUser) {
 		response.status(200).send('Error 404: Event document not found\nError 404: User document not found');
 	}
 	else if (!validEvent) {
@@ -113,13 +110,10 @@ export const deleteEventController = functions.https.onRequest(async (request, r
 export const rsvpController = functions.https.onRequest(async (request, response) => {
 	const event: Event = new Event(request.body[0]);
 	const user: User = new User(request.body[1]);
-
 	const eventCollection = getEventCollection();
 	const userCollection = getUserCollection();
-
 	const eventDoc = eventCollection.doc(event.id);
 	const userDoc = userCollection.doc(user.id);
-
 	let validEvent = false;
 	let validUser = false;
 
@@ -146,7 +140,7 @@ export const rsvpController = functions.https.onRequest(async (request, response
 		rsvp(event, user);
 		response.status(200).send('Good Job');
 	}
-	else if (!validEvent && ! validUser) {
+	else if (!validEvent && !validUser) {
 		response.status(200).send('Error 404: Event document not found\nError 404: User document not found');
 	}
 	else if (!validEvent) {
