@@ -3,21 +3,22 @@ import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
 
 const config = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  databaseURL: process.env.databaseURL,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId
+	apiKey: process.env.apiKey,
+	authDomain: process.env.authDomain,
+	databaseURL: process.env.databaseURL,
+	projectId: process.env.projectId,
+	storageBucket: process.env.storageBucket,
+	messagingSenderId: process.env.messagingSenderId,
+	appId: process.env.appId
 };
 
 const app = firebase.initializeApp(config);
 
 const db = firebase.firestore(app);
+
 db.settings({
-  ssl: false,
-  timestampsInSnapshots: true
+	ssl: false,
+	timestampsInSnapshots: true
 });
 
 export { db };

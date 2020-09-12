@@ -5,7 +5,7 @@ import firebase from 'firebase-admin';
  * that way if any of the user data updates, we don't have to update the subCollection inside of an event
  */
 export class Event {
-	rsvp = {};
+	rsvp : string[] = [];
 	name: string = '';
 	date: string = '';
 	startTime: string = '';

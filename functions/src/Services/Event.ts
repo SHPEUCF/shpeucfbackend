@@ -52,7 +52,7 @@ export const checkIn = (event: Event, user: User, showAlert = true) => {
 	const rsvpBonus = (event.rsvp && user.id in event.rsvp) ? 1 : 0;
 	const pointsAfterCheckIn = user.points + event.points + rsvpBonus;
 	const userReference = firestore().collection('users').doc(user.id);
-	const eventReference = firestore().collection('users').doc(event.id);
+	const eventReference = firestore().collection('events').doc(event.id);
 
 	getEventCollection().doc(event.id).collection('attendees').doc(user.id).set({ userRef: userReference })
 		.then(() => {
