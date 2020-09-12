@@ -39,7 +39,7 @@ export const editEventController = functions.https.onRequest(async (request, res
 			response.status(200).send('Good Job');
 		}
 		else {
-			response.status(200).send('Error 404: Event document not found');
+			response.status(404).send('Error 404: Event document not found');
 		}
 	});
 });
@@ -78,13 +78,13 @@ export const checkInController = functions.https.onRequest(async (request, respo
 		response.status(200).send('Good Job');
 	}
 	else if (!validEvent && !validUser) {
-		response.status(200).send('Error 404: Event document not found\nError 404: User document not found');
+		response.status(404).send('Error 404: Event document not found\nError 404: User document not found');
 	}
 	else if (!validEvent) {
-		response.status(200).send('Error 404: Event document not found');
+		response.status(404).send('Error 404: Event document not found');
 	}
 	else {
-		response.status(200).send('Error 404: User document not found');
+		response.status(404).send('Error 404: User document not found');
 	}
 });
 
@@ -102,7 +102,7 @@ export const deleteEventController = functions.https.onRequest(async (request, r
 			response.status(200).send('Good Job');
 		}
 		else {
-			response.status(200).send('Error 404: Event document not found');
+			response.status(404).send('Error 404: Event document not found');
 		}
 	});
 });
@@ -141,12 +141,12 @@ export const rsvpController = functions.https.onRequest(async (request, response
 		response.status(200).send('Good Job');
 	}
 	else if (!validEvent && !validUser) {
-		response.status(200).send('Error 404: Event document not found\nError 404: User document not found');
+		response.status(404).send('Error 404: Event document not found\nError 404: User document not found');
 	}
 	else if (!validEvent) {
-		response.status(200).send('Error 404: Event document not found');
+		response.status(404).send('Error 404: Event document not found');
 	}
 	else {
-		response.status(200).send('Error 404: User document not found');
+		response.status(404).send('Error 404: User document not found');
 	}
 });
