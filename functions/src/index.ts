@@ -30,3 +30,4 @@ export const editEvent = eventService.edit_Event;
 export const deleteEvent = eventService.delete_Event;
 export const checkIn = eventService.check_In;
 export const rsvp = eventService.rsvps;
+export const getEvent = eventService.get_Event;
