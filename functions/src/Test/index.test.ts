@@ -1,50 +1,20 @@
 // eslint-disable-next-line camelcase
 import { create_Event } from '../Controller/Event';
 import 'jest';
+import { Event } from '../Models/Event';
+import * as firebase from '@firebase/testing';
 // import test from 'firebase-functions-test';
+import { createEvent } from '../Services/Event';
 
-// const testEnv = test();
-// const config = {
-// 	apiKey: process.env.apiKey,
-// 	authDomain: process.env.authDomain,
-// 	databaseURL: process.env.databaseURL,
-// 	projectId: process.env.projectId,
-// 	storageBucket: process.env.storageBucket,
-// 	messagingSenderId: process.env.messagingSenderId,
-// 	appId: process.env.appId
-// };
+firebase.initializeTestApp({
+	projectId: 'my-test-project',
+	auth: { uid: 'alice', email: 'alice@example.com' }
+});
 
-// const test = require('firebase-functions-test')();
-// const key = functions.config();
-
-// test.mockConfig({ stripe: { key: '23wr42ewr34' } });
+firebase.initializeAdminApp({ projectId: 'my-test-project' });
 
 describe('my functions', () => {
-    // let adminStub; let api;
-	// let wrapped;
-
-	// beforeAll(() => {
-	// 	// you can use `sinon.stub` instead
-	// 	adminStub = jest.spyOn(admin, 'initializeApp');
-
-	// 	// after initializeApp call, we load our functions
-	// 	api = require('../index');
-	// });
-
-	// afterAll(() => {
-	// 	// clean things up
-	// 	adminStub.mockRestore();
-	// 	test().cleanup();
-
-	// 	// reset our database
-	// 	// eslint-disable-next-line @typescript-eslint/no-floating-promises
-	// 	admin
-	// 		.database()
-	// 		.ref('users')
-	// 		.remove();
-	// });
-
-	it('so see if testing works', async () => {
+	xit('it should send http function req and res', async () => {
 		const req = { testQuery: {
 			test: 'is this getting pasted',
 			otherRq: 'something else'
@@ -58,7 +28,27 @@ describe('my functions', () => {
 		void create_Event(req as any, res as any);
 	});
 
-	it('test to see if testing works', () => {
+	it('it should test non http functions', () => {
+		const event = {
+			firstname: 'sofia',
+			lastname: 'montana',
+			major: 'cs',
+			rsvp: [' '],
+			date: '1/5',
+			startTime: '12:00pm',
+			endTime: '1:00pm',
+			location: 'orlando',
+			points: '0',
+			committee: 'tech',
+			type: 'noon',
+			id: '39393'
+		};
+		const snap = new Event(event);
+
+		expect(createEvent(snap)).toEqual(snap);
+	});
+
+	it('it should works', () => {
 		// meanlessing test just to test if jest is working for testing
 		expect(1).toBe(1);
 	});
