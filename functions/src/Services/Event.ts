@@ -81,25 +81,22 @@ export const deleteEvent = (event: Event) => {
  * I decided to keep the function as it could serve well for future reference when making a real getEvent function,
  * or whenever we have to deal with retrieving subCollections.
  */
-export const getEvent = async (event: Event) => {
-	const eventRef = getEventCollection();
-	let eventData;
+export const getEvent = (event: Event) => {
+	const eventRef = getEventCollection().doc(event.id);
 
-	await eventRef.doc(event.id).get()
-		.then(documentSnapshot => {
-			console.log(JSON.stringify(documentSnapshot.data()));
-			eventData = documentSnapshot.data();
-		})
+	eventRef.get()
+		.then(documentSnapshot => console.log(documentSnapshot.data()))
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
-	console.log(eventData);
 
-	await eventRef.doc(event.id).collection('attendees').get()
+	eventRef.collection('attendees').get()
 		.then(querySnapshot => querySnapshot.forEach(
 			documentSnapshot => {
 				documentSnapshot.data().userRef.get()
-					.then((userSnapshot: firestore.DocumentSnapshot) => {
-						console.log(userSnapshot.data());
-					});
-			}));
+					.then((userSnapshot: firestore.DocumentSnapshot) => console.log(userSnapshot.data()))
+					.then(() => Promise.resolve())
+					.catch((error: string) => Promise.reject(error));
+			}))
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
 };
