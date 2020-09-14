@@ -36,7 +36,7 @@ export const rsvps = functions.https.onRequest((request, response) => {
 	response.status(200).send('Good Job');
 });
 
-export const get_Event = functions.https.onRequest((request, response) => {
+export const getEventController = functions.https.onRequest((request, response) => {
 	const event: Event = new Event(request.body);
 	getEvent(event);
 	response.status(200).send('Good Job');
