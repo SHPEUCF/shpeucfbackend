@@ -25,10 +25,8 @@
     "@typescript-eslint/parser": "^4.0.1",
     "eslint": "^7.8.1",
     "firebase-functions-test": "^0.2.2",
-    "jest": "^26.4.2",
     "ts-jest": "^26.3.0",
     "typescript": "^3.9.7"
   },
   "private": true
-  
 }
