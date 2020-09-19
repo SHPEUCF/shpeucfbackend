@@ -17,7 +17,7 @@ export const createUser = async (user: User) => {
 };
 
 export const editUser = async (user: User) => {
-	const userCollection = getUserCollection().withConverter(userConverter);
+	const userCollection = getUserCollection();
 	const userDoc = userCollection.doc(user.id);
 
 	/**
