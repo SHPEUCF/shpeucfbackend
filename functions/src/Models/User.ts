@@ -6,6 +6,7 @@ import firebase from 'firebase-admin';
  */
 export class User {
 	voted: boolean = false;
+	
 	applied: boolean = false;
 	userCommittees: object = {};
 	privilege: object = {};
@@ -20,6 +21,7 @@ export class User {
 	country: string = '';
 	gender: string = '';
 	birthday: string = '';
+	paidMember: boolean = false;
 	id: string = '';
 
 	constructor(user: Partial<User> = {}) {
