@@ -6,7 +6,6 @@ import firebase from 'firebase-admin';
  */
 export class User {
 	voted: boolean = false;
-	
 	applied: boolean = false;
 	userCommittees: object = {};
 	privilege: object = {};
