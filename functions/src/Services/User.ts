@@ -12,7 +12,7 @@ function getUserCollection() {
 export const createUser = async (user: User) => {
 	const userCollection = db.collection('users').withConverter(userConverter);
 
-	getUserCollection().doc(user.id).set({ userRef: userReference })
+	userCollection.add(user)
 		.then(() => Promise.resolve())
 		.catch((error: any) => Promise.reject(error));
 	// getUserCollection().doc(user.id).collection('user').doc(user.id).set({ userRef: userReference })

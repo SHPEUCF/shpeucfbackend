@@ -41,8 +41,11 @@ export const editEvent = (event: Event) => {
  */
 export const rsvp = (event: Event, user: User) => {
 	const eventCollection = getEventCollection();
-	event.rsvp.push(user.id);
-	eventCollection.doc(event.id).update({rsvp: event.rsvp});
+	const newRSVP = firestore.FieldValue.arrayUnion(user.id);
+
+	eventCollection.doc(event.id).update({ rsvp: newRSVP })
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
 };
 
 /**

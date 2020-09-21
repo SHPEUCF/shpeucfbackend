@@ -25,9 +25,9 @@ export { db };
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const createUser = userService.create_User;
-export const createEvent = eventService.create_Event;
-export const editEvent = eventService.edit_Event;
-export const deleteEvent = eventService.delete_Event;
-export const checkIn = eventService.check_In;
-export const rsvp = eventService.rsvps;
+export const createUser = userService.createUserController;
+export const createEvent = eventService.createEventController;
+export const editEvent = eventService.editEventController;
+export const deleteEvent = eventService.deleteEventController;
+export const checkIn = eventService.checkInController;
+export const rsvp = eventService.rsvpController;
