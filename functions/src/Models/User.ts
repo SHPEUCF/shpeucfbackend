@@ -9,7 +9,7 @@ export class User {
 	applied: boolean = false;
 	userCommittees: object = {};
 	privilege: object = {};
-	color: string = '#21252b';
+	color: string = '';
 	points: number = 0;
 	flag: string = '';
 	picture: string = '';

@@ -9,7 +9,7 @@ function getUserCollection() {
 }
 
 export const createUser = async (user: User) => {
-	const userCollection = getUserCollection().withConverter(userConverter);
+	const userCollection = getUserCollection();
 
 	userCollection.add(user)
 		.then(() => Promise.resolve())
@@ -23,17 +23,7 @@ export const editUser = async (user: User) => {
 	/**
 	 * Update all fields in User except prohibited fields such as voted, privilege, points, firstName, and lastName
 	 */
-	userDoc.update({
-		applied: user.applied,
-		userCommittees: user.userCommittees,
-		color: user.color,
-		flag: user.flag,
-		picture: user.picture,
-		email: user.email,
-		major: user.major,
-		country: user.country,
-		gender: user.gender,
-		birthday: user.birthday })
+	userDoc.update({ ...user })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
