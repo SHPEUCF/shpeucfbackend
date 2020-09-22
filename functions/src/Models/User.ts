@@ -7,7 +7,7 @@ import firebase from 'firebase-admin';
 export class User {
 	voted: boolean = false;
 	applied: boolean = false;
-	userCommittees: object = {};
+	userCommittees: string[] = [];
 	privilege: object = {};
 	color: string = '#21252b';
 	points: number = 0;
