@@ -1,4 +1,4 @@
-import { createEvent, deleteEvent, editEvent, checkIn, rsvp } from '../Services/Event';
+import { createEvent, deleteEvent, editEvent, checkIn, rsvp, getEvent } from '../Services/Event';
 import { Event, eventConverter } from '../Models/Event';
 import { User, userConverter } from '../Models/User';
 import { firestore } from 'firebase-admin';
@@ -148,5 +148,28 @@ export const rsvpController = functions.https.onRequest(async (request, response
 	}
 	else {
 		response.status(404).send('Error 404: User document not found');
+	}
+});
+
+export const getEventController = functions.https.onRequest(async (request, response) => {
+	const event: Event = new Event(request.body);
+	const eventCollection = getEventCollection();
+	const eventDoc = eventCollection.doc(event.id);
+	let validEvent = false;
+
+	/**
+	 * Checks if Event document exists.
+	 */
+	await eventDoc.get().then((docSnapshot) => {
+		if (docSnapshot.exists)
+			validEvent = true;
+	});
+
+	if (validEvent) {
+		getEvent(event);
+		response.status(200).send('Good Job');
+	}
+	else {
+		response.status(404).send('Error 404: Event document not found');
 	}
 });

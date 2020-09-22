@@ -31,3 +31,4 @@ export const editEvent = eventService.editEventController;
 export const deleteEvent = eventService.deleteEventController;
 export const checkIn = eventService.checkInController;
 export const rsvp = eventService.rsvpController;
+export const getEvent = eventService.getEventController;

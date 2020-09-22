@@ -60,7 +60,7 @@ export const checkIn = (event: Event, user: User, showAlert = true) => {
 	const rsvpBonus = (event.rsvp && user.id in event.rsvp) ? 1 : 0;
 	const pointsAfterCheckIn = user.points + event.points + rsvpBonus;
 	const userReference = firestore().collection('users').doc(user.id);
-	const eventReference = firestore().collection('users').doc(event.id);
+	const eventReference = firestore().collection('events').doc(event.id);
 
 	getEventCollection().doc(event.id).collection('attendees').doc(user.id).set({ userRef: userReference })
 		.then(() => {
@@ -79,6 +79,32 @@ export const deleteEvent = (event: Event) => {
 	const eventRef = getEventCollection();
 
 	eventRef.doc(event.id).delete()
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+};
+
+/**
+ * This function was used for testing the attendees subCollection inside of events.
+ *
+ * I decided to keep the function as it could serve well for future reference when making a real getEvent function,
+ * or whenever we have to deal with retrieving subCollections.
+ */
+export const getEvent = (event: Event) => {
+	const eventRef = getEventCollection().doc(event.id);
+
+	eventRef.get()
+		.then(documentSnapshot => console.log(documentSnapshot.data()))
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+
+	eventRef.collection('attendees').get()
+		.then(querySnapshot => querySnapshot.forEach(
+			documentSnapshot => {
+				documentSnapshot.data().userRef.get()
+					.then((userSnapshot: firestore.DocumentSnapshot) => console.log(userSnapshot.data()))
+					.then(() => Promise.resolve())
+					.catch((error: string) => Promise.reject(error));
+			}))
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
