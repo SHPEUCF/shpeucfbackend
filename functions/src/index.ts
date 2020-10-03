@@ -26,6 +26,7 @@ export { db };
 // https://firebase.google.com/docs/functions/typescript
 
 export const createUser = userService.createUserController;
+export const editUser = userService.editUserController;
 export const createEvent = eventService.createEventController;
 export const editEvent = eventService.editEventController;
 export const deleteEvent = eventService.deleteEventController;

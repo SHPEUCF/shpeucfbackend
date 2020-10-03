@@ -41,8 +41,7 @@ export const editEvent = (event: Event) => {
 };
 
 /**
- * Adds User's doc id to the Event's rsvp list, then updates the Event document
- * to contain the new list.
+ * Adds the user's id to an event's rsvp list.
  */
 export const rsvp = (event: Event, user: User) => {
 	const eventCollection = getEventCollection();

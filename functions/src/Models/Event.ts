@@ -43,7 +43,7 @@ export class Event {
 /**
  * Converts Event objects into object literals and vice versa.
  *
- * We need this because the Firestore can't handle custom objects (Ex: The Event object in this file), the data to be passed needs to be an object literal
+ * We need this because the Firestore can't handle custom objects (Ex: The Event object in this file), so the data to be passed needs to be an object literal
  */
 export const eventConverter = {
 	toFirestore: function(event: Event): firebase.firestore.DocumentData {

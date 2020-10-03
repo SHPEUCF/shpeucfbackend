@@ -9,7 +9,7 @@ export class User {
 	applied: boolean = false;
 	userCommittees: string[] = [];
 	privilege: object = {};
-	color: string = '#21252b';
+	color: string = '';
 	points: number = 0;
 	flag: string = '';
 	picture: string = '';
@@ -20,6 +20,7 @@ export class User {
 	country: string = '';
 	gender: string = '';
 	birthday: string = '';
+	paidMember: boolean = false;
 	id: string = '';
 
 	constructor(user: Partial<User> = {}) {
