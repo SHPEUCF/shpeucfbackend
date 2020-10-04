@@ -3,7 +3,7 @@ import firebase from 'firebase-admin';
 export class Committee {
 	title: string = '';
 	events: string[] = [];
-	chair: string = '';
+	chair: string[] = [];
 	description: string = '';
 
 	constructor(committee: Partial<Committee> = {}) {

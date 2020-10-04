@@ -10,16 +10,17 @@ export const addCommittee = (committee:Committee) => {
 };
 
 /**
- * Returns all existing committees in the committee collection, this function returns a list of JSON objects, since firestore seems to operate this way.
+ * Returns all existing committees in the committee collection, this function returns a list of committees,
+ * since firestore doesn't allow for an entire collection to be returned as a JSON object.
  */
 export const getCommittees = async () => {
 	const committeeCollection = getCommitteeCollection();
-	let committees;
+	let committees: Committee[] = [];
 
 	await committeeCollection.get()
 		.then(querySnapshot => {
 			committees = querySnapshot.docs.map((documentSnapshot) => {
-				return { id: documentSnapshot.id, ...documentSnapshot.data() };
+				return documentSnapshot.data();
 			});
 		})
 		.then(() => Promise.resolve())
