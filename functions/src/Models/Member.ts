@@ -19,7 +19,7 @@ export class Member {
 	}
 }
 
-export const MemberConverter = {
+export const memberConverter = {
 	toFirestore: function(member: Member): firebase.firestore.DocumentData {
 		const { paidMember, firstName, lastName, id, user,
 			board, eboard, president } = member;
