@@ -13,7 +13,7 @@ export const addCommittee = (committee:Committee) => {
  * Returns all existing committees in the committee collection, this function returns a list of committees,
  * since firestore doesn't allow for an entire collection to be returned as a JSON object.
  */
-export const getCommittees = () => {
+export const getCommittees = async () => {
 	const committeeCollection = getCommitteeCollection();
 	let committees: Committee[] = [];
 
