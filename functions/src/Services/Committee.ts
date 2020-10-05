@@ -26,7 +26,5 @@ export const getCommittees = async () => {
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 
-	console.log(committees);
-
 	return committees;
 };
