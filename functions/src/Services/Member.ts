@@ -9,12 +9,17 @@ function getUserCollection() {
 }
 
 export const editMember = (user: User, member: Member) => {
-	const memberRef = db.collection('member').doc(member.id);
-	const userBool = true;
+	// const memberRef = db.collection('member').doc(member.id);
+	// const userBool = true;
 
-	getUserCollection().doc(user.id).collection('member').doc(member.id).set({ member: memberRef })
+	getUserCollection().doc(user.id).collection('member').doc(member.id).set({ ...member })
 		.then(() => {
-			getUserCollection().doc(user.id).update({ userMade: userBool })
+			getUserCollection().doc(user.id).collection('member').doc(member.id).update({ ...member })
+				.then(() => Promise.resolve())
+				.catch(error => Promise.reject(error));
+		})
+		.then(() => {
+			getUserCollection().doc(user.id).update({ userMade: member.user, paidMember: member.paidMember })
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
 		})
