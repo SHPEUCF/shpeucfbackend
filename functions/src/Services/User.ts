@@ -1,5 +1,4 @@
 import { User, userConverter } from '../Models/User';
-// import { firestore } from 'firebase-admin';
 import { db } from '../index';
 
 /**
