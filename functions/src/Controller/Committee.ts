@@ -1,4 +1,4 @@
-import { addCommittee, getCommittees } from '../Services/Committee';
+import { addCommittee, getCommittees, editCommittee } from '../Services/Committee';
 import { Committee, committeeConverter } from '../Models/Committee';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
@@ -19,5 +19,13 @@ export const addCommitteeController = functions.https.onRequest((request, respon
 
 export const getCommitteesController = functions.https.onRequest((request, response) => {
 	void getCommittees();
+	response.status(200).send('Good Job');
+});
+
+export const editCommitteeController = functions.https.onRequest((request, response) => {
+	const oldTitle: string = request.body['oldTitle'];
+	const committee: Committee = new Committee(request.body);
+
+	editCommittee(committee, oldTitle);
 	response.status(200).send('Good Job');
 });
