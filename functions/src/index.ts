@@ -2,7 +2,6 @@ import firebase from 'firebase-admin';
 import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
 import * as committeeService from './Controller/Committee';
-
 import * as memberService from './Controller/Member';
 
 const config = {
