@@ -1,11 +1,16 @@
-import { Member } from '../Models/Member';
+import { Member, memberConverter } from '../Models/Member';
 import * as functions from 'firebase-functions';
 import { firestore } from 'firebase-admin';
 import { User, userConverter } from '../Models/User';
 import { editMember, assignPosition } from '../Services/Member';
+import { committeeConverter } from '../Models/Committee';
 
 function getUserCollection() {
 	return firestore().collection('users').withConverter(userConverter);
+}
+
+function getCommitteeCollection() {
+	return firestore().collection('committees').withConverter(committeeConverter);
 }
 
 export const editMembersController = functions.https.onRequest(async (request, response) => {
@@ -15,7 +20,7 @@ export const editMembersController = functions.https.onRequest(async (request, r
 	const userDoc = userCollection.doc(user.id);
 
 	/**
-	 * If the User document exists, complete the editUser function.
+	 * If the User document exists, complete the editMember function.
 	 */
 	await userDoc.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
@@ -35,16 +40,47 @@ export const assignPositionController = functions.https.onRequest(async (request
 	const userCollection = getUserCollection();
 	const userDoc = userCollection.doc(user.id);
 
-	/**
-	 * If the User document exists, complete the editUser function.
-	 */
+	const memberDoc = userDoc.collection('member').withConverter(memberConverter).doc(member.id);
+
+	const committeeCollection = getCommitteeCollection();
+	const committeeDoc = committeeCollection.doc(member.committeeTitle);
+
+	let validUser = false;
+	let validMember = false;
+	let validCommittee = false;
+
 	await userDoc.get().then((docSnapshot) => {
-		if (docSnapshot.exists) {
-			assignPosition(user, member);
-			response.status(200).send('Good Job');
-		}
-		else {
-			response.status(404).send('Error 404: User document not found');
-		}
+		if (docSnapshot.exists)
+			validUser = true;
 	});
+
+	await memberDoc.get().then((docSnapshot) => {
+		if (docSnapshot.exists)
+			validMember = true;
+	});
+
+	await committeeDoc.get().then((docSnapshot) => {
+		if (docSnapshot.exists)
+			validCommittee = true;
+	});
+
+	let errorResponse = '';
+
+	/**
+	 * Creates our error messages.
+	 */
+	if (!validUser)
+		errorResponse += 'Error 404: User document not found\n';
+	if (!validMember)
+		errorResponse += 'Error 404: Member document not found\n';
+	if (!validCommittee)
+		errorResponse += 'Error 404: Committee document not found';
+
+	if (validUser && validMember && validCommittee) {
+		assignPosition(user, member);
+		response.status(200).send('Good Job');
+	}
+	else {
+		response.status(404).send(errorResponse);
+	}
 });

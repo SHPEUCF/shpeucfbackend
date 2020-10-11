@@ -9,6 +9,7 @@ export class Member {
 	lastName: string = '';
 	paidMember: boolean = false;
 	id: string = '';
+	committeeTitle: string = '';
 	user: boolean = false;
 	board: boolean = false;
 	eboard: boolean = false;
@@ -19,7 +20,7 @@ export class Member {
 	}
 }
 
-export const MemberConverter = {
+export const memberConverter = {
 	toFirestore: function(member: Member): firebase.firestore.DocumentData {
 		const { paidMember, firstName, lastName, id, user,
 			board, eboard, president } = member;

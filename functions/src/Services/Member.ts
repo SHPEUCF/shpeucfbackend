@@ -1,6 +1,7 @@
 import { User, userConverter } from '../Models/User';
 import { firestore } from 'firebase-admin';
-import { Member, MemberConverter } from '../Models/Member';
+import { Member, memberConverter } from '../Models/Member';
+import { committeeConverter } from '../Models/Committee'
 
 /**
  * Handles retrieving the user collection with the converter.
@@ -10,7 +11,11 @@ function getUserCollection() {
 }
 
 function getMemberCollection() {
-	return firestore().collection('member').withConverter(MemberConverter);
+	return firestore().collection('member').withConverter(memberConverter);
+}
+
+function getCommitteeCollection() {
+	return firestore().collection('committees').withConverter(committeeConverter);
 }
 
 export const editMember = (user: User, member: Member) => {
@@ -30,10 +35,16 @@ export const editMember = (user: User, member: Member) => {
 export const assignPosition = (user : User, member : Member) => {
 	const userCollection = getUserCollection();
 	const userDoc = userCollection.doc(user.id);
-
-	const memberDoc = userDoc.collection('member').withConverter(MemberConverter).doc(member.id);
+	const memberDoc = userDoc.collection('member').withConverter(memberConverter).doc(member.id);
 
 	memberDoc.update({ ...member })
 		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+
+	const committeeCollection = getCommitteeCollection();
+	const committeeDoc = committeeCollection.doc(member.committeeTitle);
+	const newChair = firestore.FieldValue.arrayUnion(member.id);
+
+	committeeDoc.update({ chair: newChair }).then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
