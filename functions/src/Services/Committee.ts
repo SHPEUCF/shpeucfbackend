@@ -4,15 +4,16 @@ import { Committee } from '../Models/Committee';
 export const addCommittee = (committee:Committee) => {
 	const committeeCollection = getCommitteeCollection();
 
-	committeeCollection.doc(committee.title).set(committee)
+	committeeCollection.add(committee)
+		.then((documentSnapshot) => committeeCollection.doc(documentSnapshot.id).update({ id: documentSnapshot.id }))
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
 
-export const editCommittee = (committee:Committee, oldTitle:string) => {
+export const editCommittee = (committee:Committee) => {
 	const committeeCollection = getCommitteeCollection();
 
-	committeeCollection.doc(oldTitle).set(committee)
+	committeeCollection.doc(committee.id).update({ ...committee })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
