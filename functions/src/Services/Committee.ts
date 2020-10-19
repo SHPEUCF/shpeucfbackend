@@ -4,7 +4,16 @@ import { Committee } from '../Models/Committee';
 export const addCommittee = (committee:Committee) => {
 	const committeeCollection = getCommitteeCollection();
 
-	committeeCollection.doc(committee.title).set(committee)
+	committeeCollection.add(committee)
+		.then((documentSnapshot) => committeeCollection.doc(documentSnapshot.id).update({ id: documentSnapshot.id }))
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+};
+
+export const editCommittee = (committee:Committee) => {
+	const committeeCollection = getCommitteeCollection();
+
+	committeeCollection.doc(committee.id).update({ ...committee })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
@@ -32,7 +41,7 @@ export const getCommittees = async () => {
 export const deleteCommittee = (committee: Committee) => {
 	const committeeRef = getCommitteeCollection();
 
-	committeeRef.doc(committee.title).delete()
+	committeeRef.doc(committee.id).delete()
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
