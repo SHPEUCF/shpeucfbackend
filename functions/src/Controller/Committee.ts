@@ -22,7 +22,7 @@ export const getCommitteesController = functions.https.onRequest((request, respo
 	response.status(200).send('Good Job');
 });
 
-export const deleteCommitteeController = functions.https.onRequest( async ( request, response) => {
+export const deleteCommitteeController = functions.https.onRequest(async (request, response) => {
 	const committee: Committee = new Committee(request.body);
 	const committeeCollection = getCommitteeCollection();
 	const committeeRef = committeeCollection.doc(committee.title);
