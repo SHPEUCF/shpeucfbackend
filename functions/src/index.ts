@@ -39,3 +39,4 @@ export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editMember = memberService.editMembersController;
 export const assignPosition = memberService.assignPositionController;
+export const deleteCommittee = committeeService.deleteCommitteeController;
