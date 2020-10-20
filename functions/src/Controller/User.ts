@@ -1,16 +1,16 @@
 import { User, userConverter } from '../Models/User';
 import * as functions from 'firebase-functions';
-import { firestore } from 'firebase-admin';
+import { db } from '../index';
 import { createUser, editUser } from '../Services/User';
 
 /**
  * Handles retrieving the user collection with the converter.
  */
 function getUserCollection() {
-	return firestore().collection('users').withConverter(userConverter);
+	return db.collection('users').withConverter(userConverter);
 }
 
-export const createUserController = functions.https.onRequest((request, response) => {
+export const createUserController = functions.https.onRequest(async (request, response) => {
 	const user: User = new User(request.body);
 
 	createUser(user)

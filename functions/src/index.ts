@@ -1,6 +1,7 @@
 import firebase from 'firebase-admin';
 import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
+import * as memberService from './Controller/Member';
 import * as committeeService from './Controller/Committee';
 
 const config = {
@@ -34,6 +35,7 @@ export const deleteEvent = eventService.deleteEventController;
 export const checkIn = eventService.checkInController;
 export const rsvp = eventService.rsvpController;
 export const getEvent = eventService.getEventController;
+export const editMember = memberService.editMembersController;
 export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editCommittee = committeeService.editCommitteeController;
