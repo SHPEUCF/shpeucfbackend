@@ -1,21 +1,21 @@
 import { createEvent, deleteEvent, editEvent, checkIn, rsvp, getEvent } from '../Services/Event';
 import { Event, eventConverter } from '../Models/Event';
 import { User, userConverter } from '../Models/User';
-import { firestore } from 'firebase-admin';
+import { db } from '../index';
 import * as functions from 'firebase-functions';
 
 /**
  * Handles retrieving the event collection with the converter.
  */
 function getEventCollection() {
-	return firestore().collection('events').withConverter(eventConverter);
+	return db.collection('events').withConverter(eventConverter);
 }
 
 /**
  * Handles retrieving the user collection with the converter.
  */
 function getUserCollection() {
-	return firestore().collection('users').withConverter(userConverter);
+	return db.collection('users').withConverter(userConverter);
 }
 
 export const createEventController = functions.https.onRequest((request, response) => {

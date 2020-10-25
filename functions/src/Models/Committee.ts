@@ -1,10 +1,12 @@
 import firebase from 'firebase-admin';
 
 export class Committee {
+	id: string = '';
 	title: string = '';
 	events: string[] = [];
 	chair: string[] = [];
 	description: string = '';
+	displayOrder: number = 0;
 
 	constructor(committee: Partial<Committee> = {}) {
 		Object.assign(this, committee);
@@ -18,9 +20,9 @@ export class Committee {
  */
 export const committeeConverter = {
 	toFirestore: function(committee: Committee): firebase.firestore.DocumentData {
-		const { title, events, chair, description } = committee;
+		const { id, title, events, chair, description } = committee;
 
-		return { title, events, chair, description };
+		return { id, title, events, chair, description };
 	},
 	fromFirestore: function(snapshot: firebase.firestore.DocumentData): Committee {
 		const data = snapshot;
