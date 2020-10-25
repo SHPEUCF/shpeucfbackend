@@ -44,7 +44,7 @@ export const deleteCommitteeController = functions.https.onRequest(async (reques
 
 	await committeeRef.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
-			deleteCommittee(committee);
+			deleteCommittee(committee.id);
 			response.status(200).send('Good job');
 		}
 		else {

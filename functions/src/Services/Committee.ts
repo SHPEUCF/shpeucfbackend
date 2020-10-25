@@ -38,10 +38,10 @@ export const getCommittees = async () => {
 	return committees;
 };
 
-export const deleteCommittee = (committee: Committee) => {
+export const deleteCommittee = (committee: Committee["id"]) => {
 	const committeeRef = getCommitteeCollection();
 
-	committeeRef.doc(committee.id).delete()
+	committeeRef.doc(committee).delete()
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
