@@ -1,11 +1,11 @@
 import { Member } from '../Models/Member';
 import * as functions from 'firebase-functions';
-import { firestore } from 'firebase-admin';
+import { db } from '../index';
 import { User, userConverter } from '../Models/User';
 import { editMember } from '../Services/Member';
 
 function getUserCollection() {
-	return firestore().collection('users').withConverter(userConverter);
+	return db.collection('users').withConverter(userConverter);
 }
 
 export const editMembersController = functions.https.onRequest(async (request, response) => {

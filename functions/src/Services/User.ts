@@ -1,16 +1,17 @@
 import { User, userConverter } from '../Models/User';
 import { firestore } from 'firebase-admin';
+import { db } from '../index';
 import { committeeConverter } from '../Models/Committee';
 
 /**
  * Handles retrieving the user collection with the converter.
  */
 function getUserCollection() {
-	return firestore().collection('users').withConverter(userConverter);
+	return db.collection('users').withConverter(userConverter);
 }
 
 function getCommitteeCollection() {
-	return firestore().collection('committees').withConverter(committeeConverter);
+	return db.collection('committees').withConverter(committeeConverter);
 }
 
 export const createUser = async (user: User) => {

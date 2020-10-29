@@ -1,16 +1,16 @@
 import { User, userConverter } from '../Models/User';
-import { firestore } from 'firebase-admin';
+import { db } from '../index';
 import { Member, memberConverter } from '../Models/Member';
 
 /**
  * Handles retrieving the user collection with the converter.
  */
 function getUserCollection() {
-	return firestore().collection('users').withConverter(userConverter);
+	return db.collection('users').withConverter(userConverter);
 }
 
 function getMemberCollection() {
-	return firestore().collection('member').withConverter(memberConverter);
+	return db.collection('member').withConverter(memberConverter);
 }
 
 export const editMember = (user: User, member: Member) => {
