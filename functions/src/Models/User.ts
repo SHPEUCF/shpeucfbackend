@@ -8,11 +8,16 @@ export class User {
 	voted: boolean = false;
 	applied: boolean = false;
 	userCommittees: string[] = [];
-	userMade: boolean = false;
-	privilege: object = {};
 	color: string = '';
 	points: number = 0;
 	flag: string = '';
+	privileges: Object = {
+		user: false,
+		board: false,
+		eboard: false,
+		president: false,
+		paidMember: false
+	};
 	picture: string = '';
 	firstName: string = '';
 	lastName: string = '';
@@ -21,7 +26,6 @@ export class User {
 	country: string = '';
 	gender: string = '';
 	birthday: string = '';
-	paidMember: boolean = false;
 	id: string = '';
 
 	constructor(user: Partial<User> = {}) {
@@ -31,11 +35,11 @@ export class User {
 
 export const userConverter = {
 	toFirestore: function(user: User): firebase.firestore.DocumentData {
-		const { voted, applied, userCommittees, privilege, color, country, picture, points, flag,
-			firstName, lastName, email, major, gender, birthday, id, userMade } = user;
+		const { voted, applied, userCommittees, privileges, color, country, picture, points, flag,
+			firstName, lastName, email, major, gender, birthday, id } = user;
 
-		return { voted, applied, userCommittees, privilege, color, country, picture, points, flag,
-			firstName, lastName, email, major, gender, birthday, id, userMade };
+		return { voted, applied, userCommittees, privileges, color, country, picture, points, flag,
+			firstName, lastName, email, major, gender, birthday, id };
 	},
 	fromFirestore: function(snapshot: firebase.firestore.DocumentData): User {
 		const data = snapshot;
