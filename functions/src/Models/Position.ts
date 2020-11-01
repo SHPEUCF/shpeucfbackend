@@ -4,7 +4,7 @@ export class Position {
     title: string = "";
     level: number = 0;
     description: string = "";
-    candidates = {};
+    candidates: object = {};
 
     constructor(position: Partial<Position> = {}) {
         Object.assign(this, position);
