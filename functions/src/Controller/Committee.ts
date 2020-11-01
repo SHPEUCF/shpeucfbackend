@@ -1,4 +1,4 @@
-import { addCommittee, getCommittees, editCommittee, deleteCommittee, changeLevel } from '../Services/Committee';
+import { addCommittee, getCommittees, editCommittee, deleteCommittee, changeCommitteeLevel } from '../Services/Committee';
 import { Committee, committeeConverter } from '../Models/Committee';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
@@ -13,12 +13,18 @@ export function getCommitteeCollection() {
 export const addCommitteeController = functions.https.onRequest((request, response) => {
 	const committee: Committee = new Committee(request.body);
 
-	void addCommittee(committee);
+	addCommittee(committee)
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+
 	response.status(200).send('Good Job');
 });
 
 export const getCommitteesController = functions.https.onRequest((request, response) => {
-	void getCommittees();
+	getCommittees()
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+
 	response.status(200).send('Good Job');
 });
 
@@ -44,7 +50,10 @@ export const deleteCommitteeController = functions.https.onRequest(async (reques
 
 	await committeeRef.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
-			deleteCommittee(committee);
+			deleteCommittee(committee)
+				.then(() => Promise.resolve())
+				.catch(error => Promise.reject(error));
+
 			response.status(200).send('Good job');
 		}
 		else {
@@ -53,14 +62,17 @@ export const deleteCommitteeController = functions.https.onRequest(async (reques
 	});
 });
 
-export const changeLevelController = functions.https.onRequest(async (request, response) => {
+export const changeCommitteeLevelController = functions.https.onRequest(async (request, response) => {
 	const committee: Committee = new Committee(request.body);
 	const committeeCollection = getCommitteeCollection();
 	const committeeDoc = committeeCollection.doc(committee.id);
 
 	await committeeDoc.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
-			void changeLevel(committee);
+			changeCommitteeLevel(committee)
+				.then(() => Promise.resolve())
+				.catch(error => Promise.reject(error));
+
 			response.status(200).send('Good job');
 		}
 		else {

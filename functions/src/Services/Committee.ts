@@ -5,8 +5,7 @@ import { firestore } from 'firebase-admin';
 export const addCommittee = async (committee: Committee) => {
 	const committeeCollection = getCommitteeCollection();
 
-	const committeeList = getCommittees();
-	const size = (await committeeList).length;
+	const size = (await getCommittees()).length;
 
 	committeeCollection.add(committee)
 		.then(async (documentSnapshot) => {
@@ -17,9 +16,7 @@ export const addCommittee = async (committee: Committee) => {
 				})
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
-		}
-		)
-		.then(() => Promise.resolve())
+		})
 		.catch(error => Promise.reject(error));
 };
 
@@ -84,7 +81,7 @@ export const deleteCommittee = async (committee: Committee) => {
 		.catch(error => Promise.reject(error));
 };
 
-export const changeLevel = async (committee : Committee) => {
+export const changeCommitteeLevel = async (committee : Committee) => {
 	const committeeCollection = getCommitteeCollection();
 	const docSnap = await committeeCollection.where('id', '==', committee.id).get();
 	const snapshot = await committeeCollection.orderBy('displayOrder', 'asc').get();

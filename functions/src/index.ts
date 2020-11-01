@@ -41,4 +41,4 @@ export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editCommittee = committeeService.editCommitteeController;
 export const deleteCommittee = committeeService.deleteCommitteeController;
-export const changeLevel = committeeService.changeLevelController;
+export const changeCommitteeLevel = committeeService.changeCommitteeLevelController;

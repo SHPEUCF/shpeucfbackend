@@ -10,6 +10,7 @@ export class User {
 	userCommittees: string[] = [];
 	privilege!: {
 		user: boolean;
+		paidMember: boolean;
 		board: boolean;
 		eboard: boolean;
 		president: boolean;
@@ -25,7 +26,6 @@ export class User {
 	country: string = '';
 	gender: string = '';
 	birthday: string = '';
-	paidMember: boolean = false;
 	id: string = '';
 
 	constructor(user: Partial<User> = {}) {

@@ -52,15 +52,19 @@ export const assignPositionController = functions.https.onRequest(async (request
 	let validUser = false;
 	let validCommittee = false;
 
-	await userDoc.get().then((docSnapshot) => {
+	userDoc.get().then((docSnapshot) => {
 		if (docSnapshot.exists)
 			validUser = true;
-	});
+	})
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
 
-	await committeeDoc.get().then((docSnapshot) => {
+	committeeDoc.get().then((docSnapshot) => {
 		if (docSnapshot.exists)
 			validCommittee = true;
-	});
+	})
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));;
 
 	let errorResponse = '';
 
@@ -70,7 +74,7 @@ export const assignPositionController = functions.https.onRequest(async (request
 	if (!validUser)
 		errorResponse += 'Error 404: User document not found\n';
 	if (!validCommittee)
-		errorResponse += 'Error 404: Committee document not found';
+		errorResponse += 'Error 404: Committee document not found\n';
 
 	if (validUser && validCommittee) {
 		assignPosition(user.id, committee.id);
