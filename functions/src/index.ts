@@ -29,6 +29,8 @@ export { db };
 
 export const createUser = userService.createUserController;
 export const editUser = userService.editUserController;
+export const openApplications = userService.openApplicationsController;
+export const closeApplications = userService.closeApplicationsController;
 export const createEvent = eventService.createEventController;
 export const editEvent = eventService.editEventController;
 export const deleteEvent = eventService.deleteEventController;

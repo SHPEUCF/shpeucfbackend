@@ -1,7 +1,7 @@
 import { User, userConverter } from '../Models/User';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
-import { createUser, editUser } from '../Services/User';
+import { createUser, editUser, openApplications, closeApplications } from '../Services/User';
 
 /**
  * Handles retrieving the user collection with the converter.
@@ -29,6 +29,38 @@ export const editUserController = functions.https.onRequest(async (request, resp
 	await userDoc.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
 			void editUser(user);
+			response.status(200).send('Good Job');
+		}
+		else {
+			response.status(404).send('Error 404: User document not found');
+		}
+	});
+});
+
+export const openApplicationsController = functions.https.onRequest(async (request, response)=> {
+	const userID: string = request.body.id;
+	const userCollection = getUserCollection();
+	const userDoc = userCollection.doc(userID);
+
+	await userDoc.get().then((docSnapshot) => {
+		if (docSnapshot.exists) {
+			void openApplications(userID);
+			response.status(200).send('Good Job');
+		}
+		else {
+			response.status(404).send('Error 404: User document not found');
+		}
+	});
+});
+
+export const closeApplicationsController = functions.https.onRequest(async (request, response)=> {
+	const userID: string = request.body.id;
+	const userCollection = getUserCollection();
+	const userDoc = userCollection.doc(userID);
+
+	await userDoc.get().then((docSnapshot) => {
+		if (docSnapshot.exists) {
+			void closeApplications(userID);
 			response.status(200).send('Good Job');
 		}
 		else {

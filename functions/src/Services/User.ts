@@ -27,3 +27,19 @@ export const editUser = async (user: User) => {
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
+
+export const openApplications = async (userID: string) => {
+	const userCollection = getUserCollection();
+
+	userCollection.doc(userID).update({ applied: true })
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+};
+
+export const closeApplications = async (userID: string) => {
+	const userCollection = getUserCollection();
+
+	userCollection.doc(userID).update({ applied: false })
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+};
