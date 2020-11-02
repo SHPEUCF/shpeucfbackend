@@ -7,7 +7,7 @@ export class Candidate {
 	candidateFName: string = "";
 	candidateLName: string = "";
 	candidatePlan: string = "";
-	applyPosition: string = "";
+	positionId: string = "";
 	approved: boolean = false;
 	votesFromMembers: User[] = [];
     
