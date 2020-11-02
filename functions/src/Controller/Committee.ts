@@ -44,12 +44,13 @@ export const editCommitteeController = functions.https.onRequest(async (request,
 });
 
 export const deleteCommitteeController = functions.https.onRequest(async (request, response) => {
-	const committee: Committee = new Committee(request.body);
 	const committeeCollection = getCommitteeCollection();
-	const committeeRef = committeeCollection.doc(committee.id);
+	const id = request.body.id;
+	const committeeRef = committeeCollection.doc(id);
 
 	await committeeRef.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
+<<<<<<< HEAD
 			deleteCommittee(committee)
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
@@ -74,6 +75,10 @@ export const changeCommitteeLevelController = functions.https.onRequest(async (r
 				.catch(error => Promise.reject(error));
 
 			response.status(200).send('Good job');
+=======
+			deleteCommittee(id);
+			response.status(200).send("Good Job");
+>>>>>>> 750e301520e2dedef3089c03e9988a16f511ba7d
 		}
 		else {
 			response.status(404).send('Error 404: Committee document not found');
