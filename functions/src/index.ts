@@ -2,6 +2,7 @@ import firebase from 'firebase-admin';
 import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
 import * as committeeService from './Controller/Committee';
+import * as electionsService from './Controller/Elections';
 
 const config = {
 	apiKey: process.env.apiKey,
@@ -38,3 +39,4 @@ export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editCommittee = committeeService.editCommitteeController;
 export const deleteCommittee = committeeService.deleteCommitteeController;
+export const closeElections = electionsService.closeElectionsController;
