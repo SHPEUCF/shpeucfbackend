@@ -19,11 +19,11 @@ export class Candidate {
 
 export const candidateConverter = {
 	toFirestore: function(candidate: Candidate): firebase.firestore.DocumentData {
-		const { id, candidateFName, candidateLName, candidatePlan, applyPosition,
-			approved, votesFromMembers } = candidate;
+		const { id, candidateFName, candidateLName, candidatePlan, positionId,
+			approved, applyPosition, votesFromMembers } = candidate;
 
-		return { id, candidateFName, candidateLName, candidatePlan, applyPosition,
-				 approved, votesFromMembers };
+		return { id, candidateFName, candidateLName, candidatePlan, positionId,
+				 approved, applyPosition, votesFromMembers };
 	},
 	fromFirestore: function(snapshot: firebase.firestore.DocumentData): Candidate {
 		const data = snapshot;
