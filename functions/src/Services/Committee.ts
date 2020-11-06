@@ -53,9 +53,9 @@ export const getCommittees = async () => {
 	return committees;
 };
 
-export const deleteCommittee = async (committee: Committee) => {
+export const deleteCommittee = async (committeeId: string) => {
 	const committeeRef = getCommitteeCollection();
-	const docSnap = await committeeRef.where('id', '==', committee.id).get();
+	const docSnap = await committeeRef.where('id', '==', committeeId).get();
 	let docOrder: number = -1;
 
 	// Store this committee's displayOrder before deleting the committee.
@@ -64,7 +64,7 @@ export const deleteCommittee = async (committee: Committee) => {
 	}
 	);
 
-	committeeRef.doc(committee.id).delete()
+	committeeRef.doc(committeeId).delete()
 		.then(async () => {
 			const snapshot = await committeeRef.orderBy('displayOrder', 'asc').get();
 
@@ -80,8 +80,10 @@ export const deleteCommittee = async (committee: Committee) => {
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
-
-export const changeCommitteeLevel = async (committee : Committee) => {
+/**
+ * Changes the displayOrder of a committee.
+ */
+export const changeDisplayOrder = async (committee : Committee) => {
 	const committeeCollection = getCommitteeCollection();
 	const docSnap = await committeeCollection.where('id', '==', committee.id).get();
 	const snapshot = await committeeCollection.orderBy('displayOrder', 'asc').get();
@@ -89,7 +91,9 @@ export const changeCommitteeLevel = async (committee : Committee) => {
 	let minOrder: number = -1;
 	let decrement: boolean = false;
 
-	// Checks if we try to set an order that is out of bounds or is the same.
+	/**
+	 * Checks if we try to set an order that is out of bounds or is the same.
+	 */
 	if (committee.displayOrder < 0 || committee.displayOrder >= snapshot.size)
 		return;
 
@@ -100,18 +104,25 @@ export const changeCommitteeLevel = async (committee : Committee) => {
 	 * We store both orders to know the range of committees that must be modified.
 	 */
 	docSnap.forEach((doc: { id: any; data: () => any; }) => {
-		// We're shifting our committee back.
+		/**
+	 	 * We're shifting our committee back.
+	 	 */
 		if (committee.displayOrder > doc.data().displayOrder) {
 			maxOrder = committee.displayOrder;
 			minOrder = doc.data().displayOrder;
 			decrement = true;
 		}
-		// We're shifting our committee up.
+
+		/**
+		 * We're shifting our committee up.
+		 */
 		else if (doc.data().displayOrder > committee.displayOrder) {
 			maxOrder = doc.data().displayOrder;
 			minOrder = committee.displayOrder;
 		}
-		// We make no changes.
+		/**
+		 * We make no changes.
+		 */
 		else {
 			return;
 		}
@@ -129,7 +140,9 @@ export const changeCommitteeLevel = async (committee : Committee) => {
 				 */
 				if (minOrder <= doc.data().displayOrder && doc.data().displayOrder <= maxOrder &&
 					doc.data().id != committee.id) {
-					// We have to decrement all displayOrder values in our range if we shifted our committee back.
+					/**
+					 * We have to decrement all displayOrder values in our range if we shifted our committee back.
+					 */
 					if (decrement) {
 						committeeCollection.doc(doc.data().id).update({
 							displayOrder: firestore.FieldValue.increment(-1)
@@ -137,7 +150,9 @@ export const changeCommitteeLevel = async (committee : Committee) => {
 							.then(() => Promise.resolve())
 							.catch(error => Promise.reject(error));
 					}
-					// We have to increment all displayOrder values in our range if we shifted our committee up.
+					/**
+					 * We have to increment all displayOrder values in our range if we shifted our committee up.
+					 */
 					else {
 						committeeCollection.doc(doc.data().id).update({
 							displayOrder: firestore.FieldValue.increment(1)

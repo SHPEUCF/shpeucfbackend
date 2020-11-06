@@ -1,4 +1,4 @@
-import { addCommittee, getCommittees, editCommittee, deleteCommittee, changeCommitteeLevel } from '../Services/Committee';
+import { addCommittee, getCommittees, editCommittee, deleteCommittee, changeDisplayOrder } from '../Services/Committee';
 import { Committee, committeeConverter } from '../Models/Committee';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
@@ -55,6 +55,25 @@ export const deleteCommitteeController = functions.https.onRequest(async (reques
 				.catch(error => Promise.reject(error));
 
 			response.status(200).send('Good Job');
+		}
+		else {
+			response.status(404).send('Error 404: Committee document not found');
+		}
+	});
+});
+
+export const changeDisplayOrderController = functions.https.onRequest(async (request, response) => {
+	const committee: Committee = new Committee(request.body);
+	const committeeCollection = getCommitteeCollection();
+	const committeeDoc = committeeCollection.doc(committee.id);
+
+	await committeeDoc.get().then((docSnapshot) => {
+		if (docSnapshot.exists) {
+			changeDisplayOrder(committee)
+				.then(() => Promise.resolve())
+				.catch(error => Promise.reject(error));
+
+			response.status(200).send('Good job');
 		}
 		else {
 			response.status(404).send('Error 404: Committee document not found');
