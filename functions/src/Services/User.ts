@@ -27,3 +27,11 @@ export const editUser = async (user: User) => {
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
+
+export const changePrivilegeOfMembers = (user: User) => {
+	const userCollection = getUserCollection();
+
+	userCollection.doc(user.id).update({ privileges: user.privileges })
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+};
