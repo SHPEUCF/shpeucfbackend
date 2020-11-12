@@ -21,7 +21,7 @@ export const createEvent = (event: Event) => {
 	const eventCollection = getEventCollection();
 
 	eventCollection.add(event)
-		.then((documentSnapshot)=> {
+		.then((documentSnapshot) => {
 			eventCollection.doc(documentSnapshot.id).update({ id: documentSnapshot.id })
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));

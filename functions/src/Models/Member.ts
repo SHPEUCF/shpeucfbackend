@@ -9,6 +9,7 @@ export class Member {
 	lastName: string = '';
 	paidMember: boolean = false;
 	id: string = '';
+	committeeTitle: string = '';
 	user: boolean = false;
 	board: boolean = false;
 	eboard: boolean = false;

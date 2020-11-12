@@ -6,6 +6,7 @@ export class Committee {
 	events: string[] = [];
 	chair: string[] = [];
 	description: string = '';
+	displayOrder: number = 0;
 
 	constructor(committee: Partial<Committee> = {}) {
 		Object.assign(this, committee);

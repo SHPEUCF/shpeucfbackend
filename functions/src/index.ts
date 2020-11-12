@@ -29,6 +29,7 @@ export { db };
 
 export const createUser = userService.createUserController;
 export const editUser = userService.editUserController;
+export const assignPosition = userService.assignPositionController;
 export const createEvent = eventService.createEventController;
 export const editEvent = eventService.editEventController;
 export const deleteEvent = eventService.deleteEventController;
@@ -40,3 +41,4 @@ export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editCommittee = committeeService.editCommitteeController;
 export const deleteCommittee = committeeService.deleteCommitteeController;
+export const changeDisplayOrder = committeeService.changeDisplayOrderController;

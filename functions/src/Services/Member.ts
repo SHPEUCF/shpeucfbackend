@@ -1,6 +1,7 @@
-import { userConverter } from '../Models/User';
+import { User, userConverter } from '../Models/User';
 import { db } from '../index';
-import { Member } from '../Models/Member';
+import { Member, memberConverter } from '../Models/Member';
+
 /**
  * Handles retrieving the user collection with the converter.
  */
@@ -8,15 +9,17 @@ function getUserCollection() {
 	return db.collection('users').withConverter(userConverter);
 }
 
-export const editMember = (member: Member) => {
-	getUserCollection().doc(member.id).collection('member').doc(member.id).set({ ...member })
+function getMemberCollection() {
+	return db.collection('member').withConverter(memberConverter);
+}
+
+export const editMember = (user: User, member: Member) => {
+	const memberRef = getMemberCollection().doc(member.id);
+	const currUser: boolean = true;
+
+	getUserCollection().doc(user.id).collection('member').doc(member.id).set({ member: memberRef })
 		.then(() => {
-			getUserCollection().doc(member.id).collection('member').doc(member.id).update({ ...member })
-				.then(() => Promise.resolve())
-				.catch(error => Promise.reject(error));
-		})
-		.then(() => {
-			getUserCollection().doc(member.id).update({ userMade: member.user, paidMember: member.paidMember })
+			getUserCollection().doc(user.id).update({ userMade: currUser })
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
 		})

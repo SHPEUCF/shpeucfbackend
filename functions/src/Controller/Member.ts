@@ -1,7 +1,7 @@
 import { Member } from '../Models/Member';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
-import { userConverter } from '../Models/User';
+import { User, userConverter } from '../Models/User';
 import { editMember } from '../Services/Member';
 
 function getUserCollection() {
@@ -9,16 +9,17 @@ function getUserCollection() {
 }
 
 export const editMembersController = functions.https.onRequest(async (request, response) => {
-	const member: Member = new Member(request.body[0]);
+	const member: Member = new Member(request.body[1]);
+	const user: User = new User(request.body[0]);
 	const userCollection = getUserCollection();
-	const userDoc = userCollection.doc(member.id);
+	const userDoc = userCollection.doc(user.id);
 
 	/**
-	 * If the User document exists, complete the editUser function.
+	 * If the User document exists, complete the editMember function.
 	 */
 	await userDoc.get().then((docSnapshot) => {
 		if (docSnapshot.exists) {
-			editMember(member);
+			editMember(user, member);
 			response.status(200).send('Good Job');
 		}
 		else {
