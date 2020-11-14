@@ -19,7 +19,8 @@ export const editPosition = async (pos: Position) => {
 			isOpen = documentSnapshot.get('applicationsOpen');
 			// we only want to update if applications are open
 			if (isOpen) {
-				getPositionCollection().doc(pos.id).update({ ...pos })
+				getPositionCollection().doc(pos.id).update({ title: pos.title,
+					description: pos.description, level: pos.level })
 					.then(() => Promise.resolve())
 					.catch(error => Promise.reject(error));
 			}

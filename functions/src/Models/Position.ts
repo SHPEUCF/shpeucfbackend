@@ -14,9 +14,9 @@ export class Position {
 
 export const positionConverter = {
 	toFirestore: function (position: Position): firebase.firestore.DocumentData {
-		const { title, level, description, candidates } = position;
+		const { title, level, description, candidates, id } = position;
 
-		return { title, level, description, candidates };
+		return { title, level, description, candidates, id };
 	},
 
 	fromFirestore: function (snapshot: firebase.firestore.DocumentData): Position {
