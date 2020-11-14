@@ -16,7 +16,8 @@ export const editPosition = async (pos: Position) => {
 
 	getElectionsCollection().get().then(QuerySnapshot => {
 		(QuerySnapshot.docs[0]).ref.get().then(documentSnapshot => {
-			isOpen = documentSnapshot.get('votingOpen');
+			isOpen = documentSnapshot.get('applicationsOpen');
+			// we only want to update if applications are open
 			if (isOpen) {
 				getPositionCollection().doc(pos.id).update({ ...pos })
 					.then(() => Promise.resolve())

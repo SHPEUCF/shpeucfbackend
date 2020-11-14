@@ -4,7 +4,7 @@ export class Position {
 	title: string = '';
 	level: number = 0;
 	description: string = '';
-	candidates: object = {};
+	candidates: string[] = [];
 	id: string = '';
 
 	constructor(position: Partial<Position> = {}) {
