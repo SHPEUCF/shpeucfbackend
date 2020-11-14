@@ -8,7 +8,13 @@ export class User {
 	voted: boolean = false;
 	applied: boolean = false;
 	userCommittees: string[] = [];
-	privilege: object = {};
+	privilege!: {
+		user: boolean;
+		paidMember: boolean;
+		board: boolean;
+		eboard: boolean;
+		president: boolean;
+	};
 	color: string = '';
 	points: number = 0;
 	flag: string = '';
@@ -20,7 +26,6 @@ export class User {
 	country: string = '';
 	gender: string = '';
 	birthday: string = '';
-	paidMember: boolean = false;
 	id: string = '';
 
 	constructor(user: Partial<User> = {}) {

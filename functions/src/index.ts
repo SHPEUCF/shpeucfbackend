@@ -1,6 +1,7 @@
 import firebase from 'firebase-admin';
 import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
+import * as memberService from './Controller/Member';
 import * as committeeService from './Controller/Committee';
 import * as electionsService from './Controller/Elections';
 
@@ -29,14 +30,18 @@ export { db };
 
 export const createUser = userService.createUserController;
 export const editUser = userService.editUserController;
+export const assignPosition = userService.assignPositionController;
 export const createEvent = eventService.createEventController;
 export const editEvent = eventService.editEventController;
 export const deleteEvent = eventService.deleteEventController;
 export const checkIn = eventService.checkInController;
 export const rsvp = eventService.rsvpController;
 export const getEvent = eventService.getEventController;
+export const editMember = memberService.editMembersController;
 export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editCommittee = committeeService.editCommitteeController;
 export const deleteCommittee = committeeService.deleteCommitteeController;
 export const closeElections = electionsService.closeElectionsController;
+export const changeDisplayOrder = committeeService.changeDisplayOrderController;
+export const openElections = electionsService.openElectionsController;

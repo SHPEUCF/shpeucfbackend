@@ -1,26 +1,27 @@
 import { User, userConverter } from '../Models/User';
 import { Event, eventConverter } from '../Models/Event';
+import { db } from '../index';
 import { firestore } from 'firebase-admin';
 
 /**
  * Handles retrieving the event collection with the converter.
  */
 function getEventCollection() {
-	return firestore().collection('events').withConverter(eventConverter);
+	return db.collection('events').withConverter(eventConverter);
 }
 
 /**
  * Handles retrieving the user collection with the converter.
  */
 function getUserCollection() {
-	return firestore().collection('users').withConverter(userConverter);
+	return db.collection('users').withConverter(userConverter);
 }
 
 export const createEvent = (event: Event) => {
 	const eventCollection = getEventCollection();
 
 	eventCollection.add(event)
-		.then((documentSnapshot)=> {
+		.then((documentSnapshot) => {
 			eventCollection.doc(documentSnapshot.id).update({ id: documentSnapshot.id })
 				.then(() => Promise.resolve())
 				.catch(error => Promise.reject(error));
@@ -58,8 +59,8 @@ export const rsvp = (event: Event, user: User) => {
 export const checkIn = (event: Event, user: User, showAlert = true) => {
 	const rsvpBonus = (event.rsvp && user.id in event.rsvp) ? 1 : 0;
 	const pointsAfterCheckIn = user.points + event.points + rsvpBonus;
-	const userReference = firestore().collection('users').doc(user.id);
-	const eventReference = firestore().collection('events').doc(event.id);
+	const userReference = db.collection('users').doc(user.id);
+	const eventReference = db.collection('events').doc(event.id);
 
 	getEventCollection().doc(event.id).collection('attendees').doc(user.id).set({ userRef: userReference })
 		.then(() => {
