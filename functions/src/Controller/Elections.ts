@@ -10,6 +10,9 @@ export function getElectionsCollection() {
 
 export const closeElectionsController = functions.https.onRequest((request, response) => {
 	closeElections();
+	response.status(200).send('Good Job');
+});
+
 export const openElectionsController = functions.https.onRequest((request, response) => {
 	openElections();
 	response.status(200).send('Good Job');
