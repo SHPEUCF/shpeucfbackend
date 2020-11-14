@@ -42,5 +42,6 @@ export const addCommittee = committeeService.addCommitteeController;
 export const getCommittee = committeeService.getCommitteesController;
 export const editCommittee = committeeService.editCommitteeController;
 export const deleteCommittee = committeeService.deleteCommitteeController;
+export const closeElections = electionsService.closeElectionsController;
 export const changeDisplayOrder = committeeService.changeDisplayOrderController;
 export const openElections = electionsService.openElectionsController;
