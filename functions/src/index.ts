@@ -4,6 +4,7 @@ import * as eventService from './Controller/Event';
 import * as memberService from './Controller/Member';
 import * as committeeService from './Controller/Committee';
 import * as electionsService from './Controller/Elections';
+import * as positionService from './Controller/Position';
 
 const config = {
 	apiKey: process.env.apiKey,
@@ -44,3 +45,4 @@ export const editCommittee = committeeService.editCommitteeController;
 export const deleteCommittee = committeeService.deleteCommitteeController;
 export const changeDisplayOrder = committeeService.changeDisplayOrderController;
 export const openElections = electionsService.openElectionsController;
+export const editPosition = positionService.editPositionController;

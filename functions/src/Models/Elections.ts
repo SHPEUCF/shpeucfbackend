@@ -1,4 +1,5 @@
 import firebase from 'firebase-admin';
+import { Position } from './Position';
 
 export class Elections {
 	votingOpen: boolean = false;
