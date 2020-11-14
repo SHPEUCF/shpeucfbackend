@@ -1,7 +1,8 @@
 import { electionsConverter } from '../Models/Elections';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
-import { openElections } from '../Services/Elections';
+import { openElections, addPosition } from '../Services/Elections';
+import { Position } from '../Models/Position';
 
 export function getElectionsCollection() {
 	return db.collection('elections').withConverter(electionsConverter);
@@ -9,5 +10,12 @@ export function getElectionsCollection() {
 
 export const openElectionsController = functions.https.onRequest((request, response) => {
 	openElections();
+	response.status(200).send('Good Job');
+});
+
+export const addPositionController = functions.https.onRequest((request, response) => {
+	const position: Position = new Position(request.body);
+
+	addPosition(position);
 	response.status(200).send('Good Job');
 });
