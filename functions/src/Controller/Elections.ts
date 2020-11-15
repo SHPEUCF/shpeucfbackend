@@ -1,8 +1,8 @@
 import { electionsConverter } from '../Models/Elections';
 import * as functions from 'firebase-functions';
 import { db } from '../index';
-import { closeElections } from '../Services/Elections';
 import { openElections } from '../Services/Elections';
+import { closeElections } from '../Services/Elections';
 
 export function getElectionsCollection() {
 	return db.collection('elections').withConverter(electionsConverter);
