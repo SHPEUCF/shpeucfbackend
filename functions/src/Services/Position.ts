@@ -7,9 +7,11 @@ export const deletePosition = (position : Position) => {
 	const positionToRemove = firestore.FieldValue.arrayRemove({ ...position });
 
 	electionsCollection.get().then((QuerySnapshot) => {
-		(QuerySnapshot.docs[0]).ref.update({ positions: positionToRemove })
-			.then(() => Promise.resolve())
-			.catch(error => Promise.reject(error));
+		if (QuerySnapshot.docs[0].data().applicationsOpen == true) {
+			(QuerySnapshot.docs[0]).ref.update({ positions: positionToRemove })
+				.then(() => Promise.resolve())
+				.catch(error => Promise.reject(error));
+		}
 	})
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));

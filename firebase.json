@@ -14,10 +14,10 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 8083
     },
     "database": {
-      "port": 9000
+      "port": 9005
     },
     "ui": {
       "enabled": true
