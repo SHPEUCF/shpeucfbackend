@@ -3,7 +3,7 @@ import * as userService from './Controller/User';
 import * as eventService from './Controller/Event';
 import * as memberService from './Controller/Member';
 import * as committeeService from './Controller/Committee';
-import * as electionsService from './Controller/Elections';
+import * as electionsService from './Controller/Election';
 import * as positionService from './Controller/Position';
 
 const config = {

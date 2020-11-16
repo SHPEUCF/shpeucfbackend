@@ -1,26 +1,25 @@
 import firebase from 'firebase-admin';
 
-export class Position {
+export class ElectionPosition {
 	title: string = '';
 	level: number = 0;
 	description: string = '';
-	candidates: object = {};
 
-	constructor(position: Partial<Position> = {}) {
+	constructor(position: Partial<ElectionPosition> = {}) {
 		Object.assign(this, position);
 	}
 }
 
 export const positionConverter = {
-	toFirestore: function (position: Position): firebase.firestore.DocumentData {
-		const { title, level, description, candidates } = position;
+	toFirestore: function (position: ElectionPosition): firebase.firestore.DocumentData {
+		const { title, level, description } = position;
 
-		return { title, level, description, candidates };
+		return { title, level, description };
 	},
 
-	fromFirestore: function (snapshot: firebase.firestore.DocumentData): Position {
+	fromFirestore: function (snapshot: firebase.firestore.DocumentData): ElectionPosition {
 		const data = snapshot;
 
-		return new Position(data);
+		return new ElectionPosition(data);
 	}
 };

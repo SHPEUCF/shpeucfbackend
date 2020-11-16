@@ -1,9 +1,9 @@
-import { getElectionsCollection } from '../Controller/Elections';
+import { getElectionCollection } from '../Controller/Election';
 
-export const openElections = () => {
-	const electionsCollection = getElectionsCollection();
+export const openElection = () => {
+	const electionCollection = getElectionCollection();
 
-	electionsCollection.get()
+	electionCollection.get()
 		.then((QuerySnapshot) => {
 			(QuerySnapshot.docs[0]).ref.update({ votingOpen: true })
 				.then(() => Promise.resolve())

@@ -1,10 +1,21 @@
 import * as functions from 'firebase-functions';
-import { Position } from '../Models/Position';
+import { db } from '..';
+import { ElectionPosition, positionConverter } from '../Models/Position';
 import { addPosition } from '../Services/Position';
 
-export const addPositionController = functions.https.onRequest((request, response) => {
-	const position: Position = new Position(request.body);
+export function getPositionCollection() {
+	return db.collection('election').doc('election').collection('positions').withConverter(positionConverter);
+}
 
-	addPosition(position);
-	response.status(200).send('Good Job');
+export const addPositionController = functions.https.onRequest(async (request, response) => {
+	const position: ElectionPosition = new ElectionPosition(request.body);
+
+	addPosition(position).then((msg)=>{
+		if (msg == 'Good Job')
+			response.status(200).send('Good Job');
+		else
+			response.status(403).send(msg);
+	})
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
 });
