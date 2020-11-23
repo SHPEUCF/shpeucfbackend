@@ -32,7 +32,7 @@ export const addApplicationController = functions.https.onRequest((request, resp
 });
 
 export const approveApplicationController = functions.https.onRequest((request, response) => {
-	const candidate: Candidate = new Candidate(request.body);
+	const candidate: Candidate = request.body;
 
 	approveApplication(candidate);
 	response.status(200).send('Good Job');
