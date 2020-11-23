@@ -35,7 +35,7 @@ export const addApplication = (candidate: Candidate) => {
 	.add({ ...candidate })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
-}
+};
 
 export const approveApplication = (candidate: Candidate) => {
 	const candidateCollection = getCandidateCollection(candidate);
@@ -43,4 +43,4 @@ export const approveApplication = (candidate: Candidate) => {
 	candidateCollection.doc(candidate.id).update({ approved: true })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
-}
+};
