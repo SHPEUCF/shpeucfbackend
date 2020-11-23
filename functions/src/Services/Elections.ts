@@ -1,7 +1,9 @@
-import { getElectionsCollection } from '../Controller/Elections';
+import { getElectionCollection, getCandidateCollection } from '../Controller/Elections';
+import { getPositionCollection } from '../Controller/Position';
+import { Candidate } from '../Models/Candidate';
 
 export const closeElections = () => {
-	const electionsCollection = getElectionsCollection();
+	const electionsCollection = getElectionCollection();
 
 	electionsCollection.get()
 		.then((QuerySnapshot) => {
@@ -14,7 +16,7 @@ export const closeElections = () => {
 };
 
 export const openElections = () => {
-	const electionsCollection = getElectionsCollection();
+	const electionsCollection = getElectionCollection();
 
 	electionsCollection.get()
 		.then((QuerySnapshot) => {
@@ -25,3 +27,20 @@ export const openElections = () => {
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
+
+export const addApplication = (candidate: Candidate) => {
+	const positionCollection = getPositionCollection();
+
+	positionCollection.doc(candidate.applyPosition).collection('candidates')
+	.add({ ...candidate })
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+}
+
+export const approveApplication = (candidate: Candidate) => {
+	const candidateCollection = getCandidateCollection(candidate);
+
+	candidateCollection.doc(candidate.id).update({ approved: true })
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+}
