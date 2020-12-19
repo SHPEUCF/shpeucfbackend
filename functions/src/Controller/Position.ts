@@ -14,19 +14,13 @@ export function getPositionCollection() {
 
 export const editPositionController = functions.https.onRequest(async (request, response) => {
 	const pos: Position = new Position(request.body);
-	const posCollection = getPositionCollection();
-	const posDoc = posCollection.doc(pos.id);
 
 	/**
 	 * If the User document exists, complete the editMember function.
 	 */
-	await posDoc.get().then((docSnapshot) => {
-		if (docSnapshot.exists) {
-			editPosition(pos);
-			response.status(200).send('Good Job');
-		}
-		else {
-			response.status(404).send('Error 404: User document not found');
-		}
-	});
+	editPosition(pos)
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+
+	response.status(200).send('Good Job');
 });

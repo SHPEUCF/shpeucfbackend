@@ -4,8 +4,7 @@ export class Position {
 	title: string = '';
 	level: number = 0;
 	description: string = '';
-	candidates: object = {};
-	id: string = '';
+	candidates: Object = {};
 
 	constructor(position: Partial<Position> = {}) {
 		Object.assign(this, position);
@@ -14,9 +13,9 @@ export class Position {
 
 export const positionConverter = {
 	toFirestore: function (position: Position): firebase.firestore.DocumentData {
-		const { title, level, description, candidates, id } = position;
+		const { title, level, description, candidates } = position;
 
-		return { title, level, description, candidates, id };
+		return { title, level, description, candidates };
 	},
 
 	fromFirestore: function (snapshot: firebase.firestore.DocumentData): Position {
