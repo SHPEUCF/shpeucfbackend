@@ -1,9 +1,10 @@
 import firebase from 'firebase-admin';
+// import { Position } from './Position';
 
 export class Elections {
 	votingOpen: boolean = false;
 	applicationsOpen: boolean = false;
-	positions: Position[] = [];
+	positions: Object = {};
 
 	constructor(elections: Partial<Elections> = {}) {
 		Object.assign(this, elections);
