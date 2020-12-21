@@ -3,9 +3,9 @@ import { getPositionCollection } from '../Controller/Position';
 import { Candidate } from '../Models/Candidate';
 
 export const closeElections = () => {
-	const electionsCollection = getElectionCollection();
+	const electionCollection = getElectionCollection();
 
-	electionsCollection.get()
+	electionCollection.get()
 		.then((QuerySnapshot) => {
 			(QuerySnapshot.docs[0]).ref.update({ votingOpen: false, applicationsOpen: false })
 				.then(() => Promise.resolve())
@@ -16,9 +16,9 @@ export const closeElections = () => {
 };
 
 export const openElections = () => {
-	const electionsCollection = getElectionCollection();
+	const electionCollection = getElectionCollection();
 
-	electionsCollection.get()
+	electionCollection.get()
 		.then((QuerySnapshot) => {
 			(QuerySnapshot.docs[0]).ref.update({ votingOpen: true })
 				.then(() => Promise.resolve())
@@ -32,7 +32,7 @@ export const addApplication = (candidate: Candidate) => {
 	const positionCollection = getPositionCollection();
 
 	positionCollection.doc(candidate.applyPosition).collection('candidates')
-	.add({ ...candidate })
+		.add({ ...candidate })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
