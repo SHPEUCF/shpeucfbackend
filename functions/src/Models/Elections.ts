@@ -1,24 +1,23 @@
 import firebase from 'firebase-admin';
 
-export class Elections {
+export class Election {
 	votingOpen: boolean = false;
 	applicationsOpen: boolean = false;
-	positions: Position[] = [];
 
-	constructor(elections: Partial<Elections> = {}) {
+	constructor(elections: Partial<Election> = {}) {
 		Object.assign(this, elections);
 	}
 }
 
 export const electionsConverter = {
-	toFirestore: function(elections: Elections): firebase.firestore.DocumentData {
-		const { votingOpen, applicationsOpen, positions } = elections;
+	toFirestore: function(elections: Election): firebase.firestore.DocumentData {
+		const { votingOpen, applicationsOpen } = elections;
 
-		return { votingOpen, applicationsOpen, positions };
+		return { votingOpen, applicationsOpen };
 	},
-	fromFirestore: function(snapshot: firebase.firestore.DocumentData): Elections {
+	fromFirestore: function(snapshot: firebase.firestore.DocumentData): Election {
 		const data = snapshot;
 
-		return new Elections(data);
+		return new Election(data);
 	}
 };

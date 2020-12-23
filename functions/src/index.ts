@@ -45,3 +45,4 @@ export const deleteCommittee = committeeService.deleteCommitteeController;
 export const closeElections = electionsService.closeElectionsController;
 export const changeDisplayOrder = committeeService.changeDisplayOrderController;
 export const openElections = electionsService.openElectionsController;
+export const createElections = electionsService.createElectionsController;
