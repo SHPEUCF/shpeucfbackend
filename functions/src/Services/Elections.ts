@@ -1,4 +1,26 @@
 import { getElectionsCollection } from '../Controller/Elections';
+import { Election } from '../Models/Elections';
+
+export const createElections = async () => {
+	const electionsCollection = getElectionsCollection();
+	let flag: number = 0;
+	let newElection:Election = new Election({ votingOpen: false, applicationsOpen: false });
+
+	await electionsCollection.doc('election').get().then((docSnapshot) => {
+		if (!docSnapshot.exists) {
+			electionsCollection.doc('election').set(newElection)
+				.then(() => Promise.resolve())
+				.catch(error => Promise.reject(error));
+		}
+		else {
+			flag = 1;
+		}
+	})
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
+
+	return flag;
+};
 
 export const closeElections = () => {
 	const electionsCollection = getElectionsCollection();
