@@ -24,11 +24,17 @@ export const openElectionsController = functions.https.onRequest((request, respo
 	response.status(200).send('Good Job');
 });
 
-export const addApplicationController = functions.https.onRequest((request, response) => {
+export const addApplicationController = functions.https.onRequest(async (request, response) => {
 	const candidateApplication: Candidate = new Candidate(request.body);
 
-	addApplication(candidateApplication);
-	response.status(200).send('Good Job');
+	await addApplication(candidateApplication).then((msg) => {
+		if (msg == 'Good Job')
+			response.status(200).send('Good Job');
+		else
+			response.status(403).send(msg);
+	})
+		.then(() => Promise.resolve())
+		.catch(error => Promise.reject(error));
 });
 
 export const approveApplicationController = functions.https.onRequest((request, response) => {

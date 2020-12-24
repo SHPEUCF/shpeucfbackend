@@ -28,19 +28,46 @@ export const openElections = () => {
 		.catch(error => Promise.reject(error));
 };
 
-export const addApplication = (candidate: Candidate) => {
+export const addApplication = async (candidate: Candidate) => {
 	const positionCollection = getPositionCollection();
+	let msg: String = 'Good Job';
 
-	positionCollection.doc(candidate.applyPosition).collection('candidates')
-		.add({ ...candidate })
+	await positionCollection.doc(candidate.applyPosition).collection('candidates')
+		.doc(candidate.userId).get()
+		.then((doc) => {
+			if (doc.exists) {
+				if (!doc.get('approved')) {
+					msg = 'Application was rejected';
+				}
+				else {
+					positionCollection.doc(candidate.applyPosition).collection('candidates')
+						.doc(candidate.userId)
+						.set({ ...candidate })
+						.then(() => Promise.resolve())
+						.catch(error => Promise.reject(error));
+
+					msg = 'Good Job, updating application';
+				}
+			}
+			else {
+				positionCollection.doc(candidate.applyPosition).collection('candidates')
+					.doc(candidate.userId)
+					.set({ ...candidate })
+					.then(() => Promise.resolve())
+					.catch(error => Promise.reject(error));
+				msg = 'Good Job, creating application';
+			}
+		})
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
+
+	return msg;
 };
 
 export const approveApplication = (candidate: Candidate) => {
 	const candidateCollection = getCandidateCollection(candidate);
 
-	candidateCollection.doc(candidate.id).update({ approved: true })
+	candidateCollection.doc(candidate.userId).update({ approved: candidate.approved })
 		.then(() => Promise.resolve())
 		.catch(error => Promise.reject(error));
 };
