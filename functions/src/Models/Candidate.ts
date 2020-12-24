@@ -3,12 +3,12 @@ import { User } from './User';
 
 // digest elections model and construct
 export class Candidate {
-	id: string = '';
+	userId: string = '';
 	candidateFName: string = '';
 	candidateLName: string = '';
 	candidatePlan: string = '';
 	positionId: string = '';
-	approved: boolean = false;
+	approved: boolean | null = null;
 	applyPosition: string = '';
 	votesFromMembers: User[] = [];
 
@@ -19,10 +19,10 @@ export class Candidate {
 
 export const candidateConverter = {
 	toFirestore: function(candidate: Candidate): firebase.firestore.DocumentData {
-		const { id, candidateFName, candidateLName, candidatePlan, positionId,
+		const { userId, candidateFName, candidateLName, candidatePlan, positionId,
 			approved, applyPosition, votesFromMembers } = candidate;
 
-		return { id, candidateFName, candidateLName, candidatePlan, positionId,
+		return { userId, candidateFName, candidateLName, candidatePlan, positionId,
 				 approved, applyPosition, votesFromMembers };
 	},
 	fromFirestore: function(snapshot: firebase.firestore.DocumentData): Candidate {
